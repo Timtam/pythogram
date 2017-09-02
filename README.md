@@ -1,2 +1,2 @@
 # pythogram
-a spectogram analyzer in python
+a spectrum analyzer in python
