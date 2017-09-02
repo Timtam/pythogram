@@ -1,3 +1,5 @@
+# coding: UTF-8
+
 import wx
 
 from const import *
@@ -13,11 +15,16 @@ class MainFrame(wx.Frame):
                             wx.CLOSE_BOX | wx.CLIP_CHILDREN | wx.FRAME_SHAPED,
                       name="main frame")
     self.SetBackgroundColour("black")
+    self.SetMinClientSize((192, 108))
     self.Center()
+    
+    menu_bar = wx.MenuBar()
+    self.SetMenuBar(menu_bar)
+    
     self.main_panel = wx.Panel(parent=self, style=wx.BORDER_SUNKEN)
-    self.main_panel.SetAutoLayout(True)
     self.main_panel.SetBackgroundColour("grey")
     self.main_box = wx.BoxSizer()
-    self.main_box.Add(self.main_panel, 1, wx.EXPAND)
+    self.main_box.Add(item=self.main_panel, proportion=1, flag=wx.EXPAND)
     self.SetSizer(self.main_box)
+    
     self.CreateStatusBar(style=wx.BORDER_SUNKEN)
