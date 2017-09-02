@@ -1,4 +1,15 @@
-from pythogram import *
+import wx
+
+from pythogram.mainframe import MainFrame
+
+
 
 def main():
-  pass
+  app = wx.App(False)
+  frame = MainFrame()
+  frame.Show()
+  app.MainLoop()
+
+
+
+main()
