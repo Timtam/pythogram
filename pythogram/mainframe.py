@@ -1,5 +1,7 @@
 # coding: UTF-8
 
+import os
+
 import wx
 
 from const import *
@@ -20,7 +22,24 @@ class MainFrame(wx.Frame):
     self.Center()
     
     menu_bar = wx.MenuBar()
+    menu_file = wx.Menu()
+    file_open = wx.MenuItem(id=wx.ID_OPEN, text="&Open\tCtrl+O",
+                            help="Open a file with explorer",
+                            kind=wx.ITEM_NORMAL)
+    file_close = wx.MenuItem(id=wx.ID_EXIT, text="&Close\tCtrl+C",
+                             help="Close the application", kind=wx.ITEM_NORMAL)
+    menu_file.AppendItem(file_open)
+    menu_file.AppendItem(file_close)
+    menu_bar.Append(menu=menu_file, title="&File")
     self.SetMenuBar(menu_bar)
+    
+    self.Bind(wx.EVT_MENU, self.onQuit, file_close)
+    self.Bind(wx.EVT_MENU, self.onOpen, file_open)
+    
+    self.dlg = wx.FileDialog(self, message="Choose a file",
+                             defaultDir=os.getcwd(), defaultFile="",
+                             wildcard=FILE_TYPES,
+                             style=wx.OPEN | wx.CHANGE_DIR | wx.FILE_MUST_EXIST)
     
     self.main_panel = MainPanel(parent=self)
     self.main_box = wx.BoxSizer()
@@ -29,6 +48,16 @@ class MainFrame(wx.Frame):
     
     self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
+  
+  
+  def onOpen(self, event):
+    if self.dlg.ShowModal() == wx.ID_OK:
+      self.file_path = self.dlg.GetPath()
+    self.dlg.Destroy()
+  
+  
+  def onQuit(self, event):
+    self.Close()
 
 
 
