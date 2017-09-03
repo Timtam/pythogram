@@ -22,17 +22,33 @@ class MainFrame(wx.Frame):
     menu_bar = wx.MenuBar()
     self.SetMenuBar(menu_bar)
     
-    self.main_panel = wx.Panel(parent=self, style=wx.BORDER_SUNKEN)
-    self.main_panel.SetBackgroundColour("grey")
+    self.main_panel = MainPanel(parent=self)
     self.main_box = wx.BoxSizer()
     self.main_box.Add(item=self.main_panel, proportion=1, flag=wx.EXPAND)
     self.SetSizer(self.main_box)
     
-    self.matplot_panel = MatplotPanel(parent=self.main_panel)
-    self.sizer = wx.BoxSizer()
-    self.main_panel.SetSizer(self.sizer)
-    self.sizer.Add(item=self.matplot_panel, proportion=1,
-                   flag=wx.EXPAND | wx.SHAPED)
-    
     self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
+
+
+
+class MainPanel(wx.Panel):
+  def __init__(self, parent):
+    wx.Panel.__init__(self, parent=parent, style=wx.BORDER_SUNKEN)
+    self.SetBackgroundColour("grey")
+    
+    self.matplot_panel1 = MatplotPanel(parent=self, size=(300, 100))
+    self.matplot_panel2 = MatplotPanel(parent=self, size=(300, 100))
+    
+    # main centered box
+    self.center_box = wx.BoxSizer()
+    self.SetSizer(self.center_box)
+    
+    # vertical box for 2 matplot panels
+    self.v_box = wx.BoxSizer(wx.VERTICAL)
+    self.v_box.Add(item=self.matplot_panel1, proportion=0,
+                   flag=wx.EXPAND | wx.SHAPED)
+    self.v_box.Add(item=self.matplot_panel2, proportion=0,
+                   flag=wx.EXPAND | wx.SHAPED)
+    self.center_box.Add(item=self.v_box, proportion=1,
+                        flag=wx.EXPAND | wx.SHAPED | wx.ALIGN_CENTER)
