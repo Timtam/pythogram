@@ -20,5 +20,6 @@ class MatplotPanel(wx.Panel):
     
     self.vbox = wx.BoxSizer(wx.VERTICAL)
     self.SetSizer(self.vbox)
-    self.vbox.Add(self.toolbar, 0, wx.EXPAND)
-    self.vbox.Add(self.canvas, 1, wx.LEFT | wx.TOP | wx.GROW)
+    self.vbox.Add(item=self.toolbar, proportion=0, flag=wx.EXPAND)
+    self.vbox.Add(item=self.canvas, proportion=1,
+                  flag=wx.LEFT | wx.TOP | wx.GROW)

@@ -31,7 +31,8 @@ class MainFrame(wx.Frame):
     self.matplot_panel = MatplotPanel(parent=self.main_panel)
     self.sizer = wx.BoxSizer()
     self.main_panel.SetSizer(self.sizer)
-    self.sizer.Add(self.matplot_panel, 1, wx.EXPAND | wx.SHAPED)
+    self.sizer.Add(item=self.matplot_panel, proportion=1,
+                   flag=wx.EXPAND | wx.SHAPED)
     
     self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
