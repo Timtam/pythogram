@@ -4,15 +4,50 @@ import numpy as np
 
 class SineSignal(Signal):
 
-  def GenerateSignal(self, frequency = 440.0, length = 10.0, amplitude = 1.0):
-    return amplitude * (np.sin(2*np.pi*np.arange(self.sample_rate*duration)*frequency/self.sample_rate)).astype(np.float32)
+  def __init__(self):
+    self.__sample_rate = 44100
+    self.__length = 10.0
+    self.__amplitude = 1.0
+    self.__frequency = 440.0
 
+
+  @property
+  def signal(self):
+    return self.amplitude * (np.sin(2*np.pi*np.arange(self.__sample_rate*self.__length)*self.__frequency/self.__sample_rate)).astype(np.float32)
+
+
+  @property
+  def frequency(self):
+    return self.__frequency
+
+
+  @frequency.setter
+  def frequency(self, value):
+    self.__frequency = value
+
+  @property
+  def amplitude(self):
+    return self.__amplitude
+
+
+  @amplitude.setter
+  def amplitude(self, value):
+    self.__amplitude = value
 
   @property
   def sample_rate(self):
-    return 44100
+    return self.__sample_rate
+
+
+  @sample_rate.setter
+  def sample_rate(self, value):
+    self.__sample_rate = value
 
   @property
-  def channels(self):
-    return 1
+  def length(self):
+    return self.__length
 
+
+  @length.setter
+  def length(self, value):
+    self.__length = value
