@@ -46,17 +46,18 @@ class MainFrame(wx.Frame):
     self.main_box.Add(item=self.main_panel, proportion=1, flag=wx.EXPAND)
     self.SetSizer(self.main_box)
     
-    self.CreateStatusBar(style=wx.BORDER_SUNKEN)
+    self.status_bar = self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
   
   
   def onOpen(self, event):
     if self.dlg.ShowModal() == wx.ID_OK:
       self.file_path = self.dlg.GetPath()
-    self.dlg.Destroy()
+      self.SetStatusText("You chose following file: " + self.file_path)
   
   
   def onQuit(self, event):
+    self.dlg.Destroy()
     self.Close()
 
 
