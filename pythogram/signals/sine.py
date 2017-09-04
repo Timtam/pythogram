@@ -4,11 +4,11 @@ import numpy as np
 
 class SineSignal(Signal):
 
-  def __init__(self):
-    self.__sample_rate = 44100
-    self.__length = 10.0
-    self.__amplitude = 1.0
-    self.__frequency = 440.0
+  def __init__(self, freq=440.0, l=10.0, amp=1.0, srate=44100):
+    self.__sample_rate = srate
+    self.__length = l
+    self.__amplitude = amp
+    self.__frequency = freq
 
 
   @property
