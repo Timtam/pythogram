@@ -2,8 +2,8 @@
 
 import os
 
-import wx
 import numpy
+import wx
 from scipy import signal
 
 from const import *
@@ -71,11 +71,13 @@ class MainPanel(wx.Panel):
     self.SetBackgroundColour("grey")
     
     self.sinus = SineSignal(freq=5000.0, l=1.0, amp=0.8, srate=44100)
-    t = numpy.arange(0.0, self.sinus.length, (1.0/self.sinus.sample_rate))
+    t = numpy.arange(0.0, self.sinus.length, (1.0 / self.sinus.sample_rate))
     freqz, amp = signal.periodogram(self.sinus.signal, self.sinus.sample_rate)
-
-    self.matplot_panel1 = MatplotPanel(parent=self, size=(300, 100), x=t, y=self.sinus.signal)
-    self.matplot_panel2 = MatplotPanel(parent=self, size=(300, 100), x=freqz, y=amp)
+    
+    self.matplot_panel1 = MatplotPanel(parent=self, size=(300, 100), x=t,
+                                       y=self.sinus.signal)
+    self.matplot_panel2 = MatplotPanel(parent=self, size=(300, 100), x=freqz,
+                                       y=amp)
     
     # main centered box
     self.center_box = wx.BoxSizer()
