@@ -3,9 +3,11 @@
 import os
 
 import wx
+import numpy
 
 from const import *
 from matplotplanel import MatplotPanel
+from signals.sine import SineSignal
 
 
 
@@ -67,8 +69,11 @@ class MainPanel(wx.Panel):
     wx.Panel.__init__(self, parent=parent, style=wx.BORDER_SUNKEN)
     self.SetBackgroundColour("grey")
     
-    self.matplot_panel1 = MatplotPanel(parent=self, size=(300, 100))
-    self.matplot_panel2 = MatplotPanel(parent=self, size=(300, 100))
+    self.sinus = SineSignal(freq=10.0, l=1.0, amp=0.8, srate=44100)
+    t = numpy.arange(0.0, self.sinus.length, (1.0/self.sinus.sample_rate))
+    
+    self.matplot_panel1 = MatplotPanel(parent=self, size=(300, 100), x=t, y=self.sinus.signal)
+    self.matplot_panel2 = MatplotPanel(parent=self, size=(300, 100), x=t, y=self.sinus.signal)
     
     # main centered box
     self.center_box = wx.BoxSizer()

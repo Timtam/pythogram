@@ -9,13 +9,13 @@ from matplotlib.figure import Figure
 
 class MatplotPanel(wx.Panel):
   def __init__(self, parent, size=(100, 100), style=wx.BORDER_SIMPLE,
-               t=numpy.arange(0.0, 10, 0.1),
-               signal=numpy.sin(numpy.arange(0.0, 10, 0.1))):
+               x=numpy.arange(0.0, 10, 0.1),
+               y=numpy.sin(numpy.arange(0.0, 10, 0.1))):
     wx.Panel.__init__(self, parent, size=size, style=style)
     
     self.figure = Figure()
     self.axes = self.figure.add_subplot(111)
-    self.axes.plot(t, signal)
+    self.axes.plot(x, y)
     self.canvas = FigureCanvas(parent=self, id=wx.NewId(), figure=self.figure)
     self.toolbar = NavigationToolbar(self.canvas)
     
