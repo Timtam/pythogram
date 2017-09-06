@@ -7,7 +7,7 @@ import wx
 from scipy import signal
 
 from const import *
-from matplotplanel import MatplotPanel
+from matplotplanel import MatplotPanel, MatplotSpectrogram
 from signals.sine import SineSignal
 
 
@@ -76,15 +76,15 @@ class MainPanel(wx.Panel):
     freqz, amp = signal.periodogram(self.sinus.signal, self.sinus.sample_rate)
     
     # plot the signal and its spectrum
-    self.matplot_panel1 = MatplotPanel(parent=self, size=(50, 35), x=t,
-                                       y=self.sinus.signal, ymin=-1.0, ymax=1.0,
-                                       title='Signal', xlabel='Time in sec',
-                                       ylabel='Amplitude')
-    self.matplot_panel2 = MatplotPanel(parent=self, size=(50, 35), x=freqz,
+    self.matplot_panel1 = MatplotPanel(parent=self, size=(50, 35), x=freqz,
                                        y=amp, ymin=-0.1, ymax=1.0,
-                                       title='Spectrum',
-                                       xlabel='Frequency in Hz',
+                                       title='Spectrum', xlabel='Frequency',
                                        ylabel='Amplitude')
+    self.matplot_panel2 = MatplotSpectrogram(parent=self, size=(50, 35), x=self.sinus.signal,
+                                       # y=amp, ymin=-0.1, ymax=1.0,
+                                       title='Spectrogram',
+                                       xlabel='Time',
+                                       ylabel='Frequency')
     
     # main centered box
     self.center_box = wx.BoxSizer()
