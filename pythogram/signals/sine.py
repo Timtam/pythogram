@@ -13,7 +13,7 @@ class SineSignal(Signal):
   
   
   @property
-  def signal(self):
+  def _signal(self):
     return self.amplitude * (np.sin(2 * np.pi * np.arange(
       self.__sample_rate * self.__length) * self.__frequency /
                                     self.__sample_rate)).astype(
