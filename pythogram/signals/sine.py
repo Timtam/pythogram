@@ -6,6 +6,7 @@ from ..signal import Signal
 
 class SineSignal(Signal):
   def __init__(self, freq=440.0, l=10.0, amp=1.0, srate=44100):
+    super(SineSignal, self).__init__()
     self.__sample_rate = srate
     self.__length = l
     self.__amplitude = amp
