@@ -17,21 +17,22 @@ class FileSignal(Signal):
 
 
   @property
-  def channels(self):
-    return self.__wave.getnchannels()
-
-
-  @property
   def _signal(self):
     self.__wave.rewind()
     signal = self.__wave.readframes(-1)
-    return self.__amplitude * (np.fromstring(signal, 'Int16').astype(np.float32))
+    signal = self.__amplitude * (np.fromstring(signal, 'Int16').astype(np.float32))
+    if self.__wave.getnchannels() > 1:
+      # we need it to be reshaped first
+      nsignal = np.reshape(signal, (signal.size/self.__wave.getnchannels(), self.__wave.getnchannels()))
+      # and then we can merge it into one mono signal
+      signal = nsignal.sum(axis = 1) / self.__wave.getnchannels()
+    return signal
 
 
   @property
   def length(self):
     # we need to calculate this manually here
-    return float(len(self._signal))/(self.sample_rate*self.channels)
+    return float(self._signal.size)/(self.sample_rate)
 
 
   @property

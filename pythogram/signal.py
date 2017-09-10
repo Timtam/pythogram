@@ -16,10 +16,6 @@ class Signal(object):
   def sample_rate(self):
     return NotImplemented
 
-  @property
-  def channels(self):
-    return 1
-
   @abstractproperty
   def _signal(self):
     return NotImplemented
