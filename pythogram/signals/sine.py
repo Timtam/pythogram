@@ -18,7 +18,7 @@ class SineSignal(Signal):
     return self.amplitude * (np.sin(2 * np.pi * np.arange(
       self.__sample_rate * self.__length) * self.__frequency /
                                     self.__sample_rate)).astype(
-      np.int16)*32768
+      np.float32)
   
   
   @property
