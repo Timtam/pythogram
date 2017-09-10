@@ -20,7 +20,7 @@ class FileSignal(Signal):
   def _signal(self):
     self.__wave.rewind()
     signal = self.__wave.readframes(-1)
-    signal = self.__amplitude * (np.fromstring(signal, 'Int16').astype(np.float32))
+    signal = self.__amplitude * (np.fromstring(signal, 'Int16').astype(np.float32, order='C') / 32768.0)
     if signal.size%self.__wave.getnchannels() > 0:
       signal = signal[:-(signal.size%self.__wave.getnchannels())]
     if self.__wave.getnchannels() > 1:
