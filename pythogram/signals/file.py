@@ -21,6 +21,8 @@ class FileSignal(Signal):
     self.__wave.rewind()
     signal = self.__wave.readframes(-1)
     signal = self.__amplitude * (np.fromstring(signal, 'Int16').astype(np.float32))
+    if signal.size%self.__wave.getnchannels() > 0:
+      signal = signal[:-(signal.size%self.__wave.getnchannels())]
     if self.__wave.getnchannels() > 1:
       # we need it to be reshaped first
       nsignal = np.reshape(signal, (signal.size/self.__wave.getnchannels(), self.__wave.getnchannels()))
