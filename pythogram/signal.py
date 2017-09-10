@@ -32,7 +32,7 @@ class Signal(object):
     low = self.low_cutoff / nyq
     high = self.high_cutoff / nyq
 
-    b, a = butter(5, [low, high], btype='band')
+    b, a = butter(4, [low, high], btype='band')
 
     return lfilter(b, a, self._signal)
 
