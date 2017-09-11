@@ -1,18 +1,18 @@
 import matplotlib.pyplot as plt
 # import matplotlib.mlab as mlab
-# import matplotlib as mpl
+import matplotlib as mpl
 import wx
 from matplotlib.backends.backend_wxagg import (
   FigureCanvasWxAgg as FigureCanvas,
   NavigationToolbar2WxAgg as NavigationToolbar)
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.figure import Figure
-
+import numpy as np
 
 
 class MatplotPanel(wx.Panel):
-  def __init__(self, parent, size=(0, 0), style=wx.BORDER, grid=True, ylim=None,
-               title='', xlabel='', ylabel=''):
+  def __init__(self, parent, size=(0, 0), style=wx.BORDER, grid=True, xlim=None,
+               ylim=None, title='', xlabel='', ylabel=''):
     wx.Panel.__init__(self, parent, size=size, style=style)
     
     # figure
@@ -20,6 +20,7 @@ class MatplotPanel(wx.Panel):
     self.axes = self.figure.add_subplot(111)
     # just a recommended style
     plt.style.use('ggplot')
+    mpl.rcParams['agg.path.chunksize'] = 10000
     
     # our custom color map for spectrogram
     self.cmap = LinearSegmentedColormap(name='Custom',
@@ -45,6 +46,9 @@ class MatplotPanel(wx.Panel):
       self.axes.grid(True)
     else:
       self.axes.grid(False)
+    # limits on x?
+    if xlim:
+      self.axes.set_xlim(xlim)
     # limits on y?
     if ylim:
       self.axes.set_ylim(ylim)
@@ -71,21 +75,27 @@ class MatplotPanel(wx.Panel):
                    flag=wx.GROW)
   
   
-  def plot(self, x, y):
+  def plot(self, x, y=None):
     self.axes.plot(x, y)
     return self
   
   
-  def semilogx(self, x, y):
-    self.axes.semilogx(x, y)
+  def spectrum(self, x, y=None):
+    if y is None:
+      self.axes.plot(x)
+    else:
+      self.axes.plot(x, y)
+    # self.axes.set_yscale('symlog')
+    # self.axes.set_xscale('symlog')
     return self
   
   
   def spectrogram(self, x, fs):
-    pxx, freq, t, im = self.axes.specgram(x=x, Fs=fs, cmap='plasma')
+    x[x==0]=np.nan
+    pxx, freq, t, im = self.axes.specgram(x=x, NFFT=1024, Fs=fs, cmap='plasma')
     # pxx, freq, t = mlab.specgram(x=x, Fs=fs, NFFT=512)
     # self.axes.pcolormesh(t, freq, pxx, cmap=mpl.cm.hot)
-    self.axes.set_yscale('symlog')
+    # self.axes.set_yscale('symlog')
     # self.axes.imshow(x)
     self.figure.colorbar(im).set_label('Intensity [dB]')
     return self

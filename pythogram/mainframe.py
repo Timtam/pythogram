@@ -2,15 +2,16 @@
 
 import os
 
-import numpy
+import numpy as np
 import wx
-from scipy import signal
+from scipy import signal as sig
+from scipy.fftpack import fft, fftfreq
 
 from const import *
 from controlpanel import ControlPanel
 from matplotplanel import MatplotPanel
 from signals.sine import SineSignal
-
+from signals.file import FileSignal
 
 
 class MainFrame(wx.Frame):
@@ -73,27 +74,36 @@ class MainPanel(wx.Panel):
     # control panel for user interaction
     self.control_panel = ControlPanel(self)
     
+    self.file_path= u''
+    
     # create sine signal and spectrum
-    self.sinus = SineSignal(freq=7648.0, l=1.0, amp=0.5, srate=44100)
-    t = numpy.arange(0.0, self.sinus.length, (1.0 / self.sinus.sample_rate))
-    freqz, amp = signal.periodogram(x=self.sinus.signal,
-                                    fs=self.sinus.sample_rate)
+    self.signal = SineSignal(freq=7648.0, l=1.0, amp=1.0, srate=44100)
+    #self.signal = FileSignal(self.file_path)
+    
+    t = np.arange(0.0, self.signal.length, (1.0 / self.signal.sample_rate))
+    
+    # f: frequencies, pxx: peaks (amplitude)
+    # f, pxx = sig.periodogram(x=signal, fs=self.signal.sample_rate, scaling='spectrum')
+    pxx = abs(fft(self.signal._signal))
+    pxx = pxx[:(len(pxx)/2)]
+    
+    # amp fix: sinus with amp x -> frequency with amp x
+    # pxx = pxx / len(pxx)
     
     # plot the signal
-    self.matplot_panel1 = MatplotPanel(parent=self, ylim=(-1.0, 1.0),
-                                       title='Signal', xlabel='Time',
+    self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0), #ylim=(-1.0, 1.0),
+                                       title='Signal', xlabel='Time in seconds (s)',
                                        ylabel='Amplitude').plot(x=t,
-                                                                y=self.sinus.signal)
+                                                                y=self.signal._signal)
     #spectrum
-    self.matplot_panel2 = MatplotPanel(parent=self, ylim=(-0.1, 1.0),
-                                       title='Spectrum', xlabel='Frequency',
-                                       ylabel='Amplitude').semilogx(x=freqz,
-                                                                    y=amp)
+    self.matplot_panel3 = MatplotPanel(parent=self, #ylim=(-0.1, 1.0),
+                                       title='Spectrum', xlabel='Frequency in hertz (Hz)',
+                                       ylabel='Amplitude').spectrum(x=pxx)
     # spectrogram
-    self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
-                                       xlabel='Time',
-                                       ylabel='Frequency').spectrogram(
-      x=self.sinus.signal, fs=self.sinus.sample_rate)
+    self.matplot_panel2 = MatplotPanel(parent=self, title='Spectrogram',
+                                       xlabel='Time in seconds (s)',
+                                       ylabel='Frequency in hertz (Hz)').spectrogram(
+      x=self.signal._signal, fs=self.signal.sample_rate)
     
     # the main box sizer
     self.main_vbox = wx.BoxSizer(wx.VERTICAL)
