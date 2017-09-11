@@ -42,10 +42,8 @@ class MatplotPanel(wx.Panel):
                                                      })
     
     # grid?
-    if grid:
-      self.axes.grid(True)
-    else:
-      self.axes.grid(False)
+    self.axes.grid(grid)
+    self.grid = grid
     # limits on x?
     if xlim:
       self.axes.set_xlim(xlim)
@@ -82,11 +80,13 @@ class MatplotPanel(wx.Panel):
   
   def spectrum(self, x, y=None):
     if y is None:
-      self.axes.plot(x)
+      self.axes.plot(x, '-')
     else:
-      self.axes.plot(x, y)
-    # self.axes.set_yscale('symlog')
+      self.axes.loglog(x, y, '-')
     # self.axes.set_xscale('symlog')
+    # self.axes.set_yscale('symlog')
+    plt.grid(self.grid, which='both', ls='-')
+    plt.tight_layout()
     return self
   
   

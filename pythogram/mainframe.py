@@ -74,18 +74,21 @@ class MainPanel(wx.Panel):
     # control panel for user interaction
     self.control_panel = ControlPanel(self)
     
-    self.file_path= u''
+    self.file_path= u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne Vega.wav'
     
     # create sine signal and spectrum
-    self.signal = SineSignal(freq=7648.0, l=1.0, amp=1.0, srate=44100)
-    #self.signal = FileSignal(self.file_path)
+    #self.signal = SineSignal(freq=7648.0, l=10.0, amp=1.0, srate=44100)
+    self.signal = FileSignal(self.file_path)
     
     t = np.arange(0.0, self.signal.length, (1.0 / self.signal.sample_rate))
     
     # f: frequencies, pxx: peaks (amplitude)
     # f, pxx = sig.periodogram(x=signal, fs=self.signal.sample_rate, scaling='spectrum')
-    pxx = abs(fft(self.signal._signal))
+    
+    signal = self.signal._signal
+    pxx = abs(fft(signal))
     pxx = pxx[:(len(pxx)/2)]
+    f = np.linspace(0.0, self.signal.sample_rate/2, len(pxx))
     
     # amp fix: sinus with amp x -> frequency with amp x
     # pxx = pxx / len(pxx)
@@ -96,9 +99,9 @@ class MainPanel(wx.Panel):
                                        ylabel='Amplitude').plot(x=t,
                                                                 y=self.signal._signal)
     #spectrum
-    self.matplot_panel3 = MatplotPanel(parent=self, #ylim=(-0.1, 1.0),
+    self.matplot_panel3 = MatplotPanel(parent=self, xlim=(1, self.signal.sample_rate/2),
                                        title='Spectrum', xlabel='Frequency in hertz (Hz)',
-                                       ylabel='Amplitude').spectrum(x=pxx)
+                                       ylabel='Amplitude').spectrum(x=f, y=pxx)
     # spectrogram
     self.matplot_panel2 = MatplotPanel(parent=self, title='Spectrogram',
                                        xlabel='Time in seconds (s)',
