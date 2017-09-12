@@ -89,6 +89,8 @@ class MainPanel(wx.Panel):
     pxx = abs(fft(signal))
     pxx = pxx[:(len(pxx)/2)]
     f = np.linspace(0.0, self.signal.sample_rate/2, len(pxx))
+    pxx = pxx/max(pxx)
+    pxx = 20*np.log10(1e-8+pxx)
     
     # amp fix: sinus with amp x -> frequency with amp x
     # pxx = pxx / len(pxx)
@@ -99,9 +101,9 @@ class MainPanel(wx.Panel):
                                        ylabel='Amplitude').plot(x=t,
                                                                 y=self.signal._signal)
     #spectrum
-    self.matplot_panel3 = MatplotPanel(parent=self, xlim=(1, self.signal.sample_rate/2),
+    self.matplot_panel3 = MatplotPanel(parent=self, xlim=(1, 24000), #ylim=(0, 1e6),
                                        title='Spectrum', xlabel='Frequency in hertz (Hz)',
-                                       ylabel='Amplitude').spectrum(x=f, y=pxx)
+                                       ylabel='Amplitude in decibel relative\n to full scale (db FS)').spectrum(x=f, y=pxx)
     # spectrogram
     self.matplot_panel2 = MatplotPanel(parent=self, title='Spectrogram',
                                        xlabel='Time in seconds (s)',

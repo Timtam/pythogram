@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 # import matplotlib.mlab as mlab
 import matplotlib as mpl
+import matplotlib.ticker as ticker
 import wx
 from matplotlib.backends.backend_wxagg import (
   FigureCanvasWxAgg as FigureCanvas,
@@ -82,11 +83,12 @@ class MatplotPanel(wx.Panel):
     if y is None:
       self.axes.plot(x, '-')
     else:
-      self.axes.loglog(x, y, '-')
-    # self.axes.set_xscale('symlog')
+      self.axes.plot(x, y, '-')
+    self.axes.set_xscale('log')
     # self.axes.set_yscale('symlog')
-    plt.grid(self.grid, which='both', ls='-')
-    plt.tight_layout()
+    self.axes.set_xticks([20, 200, 2000, 20000])
+    self.axes.grid(self.grid, which='both', ls='-')
+    self.axes.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
     return self
   
   
