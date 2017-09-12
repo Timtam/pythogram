@@ -14,5 +14,10 @@ class WhiteNoiseSignal(Signal):
   
   @property
   def _signal(self):
-    return self.amplitude * np.random.normal(0, 1, size=int(self.sample_rate*self.length)).astype(np.float32)
+
+    signal = self.amplitude * np.random.normal(0, 1, size=int(self.sample_rate*self.length)).astype(np.float32)
+
+    signal /= np.max(np.abs(signal), axis = 0)
+
+    return signal
 
