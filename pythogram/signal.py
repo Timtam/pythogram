@@ -1,24 +1,21 @@
-from abc import *
-
+import numpy as np
 from scipy.signal import butter, lfilter
 
-# just an interface
-
 class Signal(object):
-  __metaclass__ = ABCMeta
 
   def __init__(self):
-    self.low_cutoff = 0.0
-    self.high_cutoff = 20000.00
+    self._define_attribute('low_cutoff', 0.0)
+    self._define_attribute('high_cutoff', 20000.0)
+    self._define_attribute('sample_rate', 44100)
+    self._define_attribute('_signal', np.zeros(0, dtype=np.float32))
+    self._define_attribute('length', 1.0)
+    self._define_attribute('amplitude', 1.0)
 
+  def _define_attribute(self, attrib, value):
 
-  @abstractproperty
-  def sample_rate(self):
-    return NotImplemented
+    if not attrib in self.__dict__:
+      self.__dict__[attrib] = value
 
-  @abstractproperty
-  def _signal(self):
-    return NotImplemented
 
   @property
   def signal(self):
@@ -31,11 +28,3 @@ class Signal(object):
     b, a = butter(4, [low, high], btype='band')
 
     return lfilter(b, a, self._signal)
-
-  @abstractproperty
-  def length(self):
-    return NotImplemented
-
-  @abstractproperty
-  def amplitude(self):
-    return NotImplemented
