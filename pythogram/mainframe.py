@@ -10,8 +10,7 @@ from scipy.fftpack import fft, fftfreq
 from const import *
 from controlpanel import ControlPanel
 from matplotplanel import MatplotPanel
-from signals.sine import SineSignal
-from signals.file import FileSignal
+from signals import *
 
 
 class MainFrame(wx.Frame):
@@ -77,8 +76,8 @@ class MainPanel(wx.Panel):
     self.file_path= u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne Vega.wav'
     
     # create sine signal and spectrum
-    #self.signal = SineSignal(freq=7648.0, l=10.0, amp=1.0, srate=44100)
-    self.signal = FileSignal(self.file_path)
+    self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
+    #self.signal = FileSignal(self.file_path)
     
     t = np.arange(0.0, self.signal.length, (1.0 / self.signal.sample_rate))
     
