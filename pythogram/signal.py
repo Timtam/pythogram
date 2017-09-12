@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.signal import butter, lfilter, resample
+from scipy.signal import filtfilt, iirfilter, resample
 
 class Signal(object):
 
@@ -22,12 +22,17 @@ class Signal(object):
     # processing the filtering in here
     # nyquist frequency
     nyq = 0.5 * self.sample_rate
-    low = self.low_cutoff / nyq
-    high = self.high_cutoff / nyq
+    low = min(self.low_cutoff / nyq, 1)
+    high = min(self.high_cutoff / nyq, 1)
 
-    b, a = butter(4, [low, high], btype='band')
+    b, a = iirfilter(5, Wn=[low, high], btype='bandpass', ftype='bessel')
 
-    return lfilter(b, a, self._signal)
+    signal = filtfilt(b, a, self._signal).astype(np.float32)
+
+    if signal.size != self._signal.size:
+      signal = resample(signal, self._signal.size)
+
+    return signal
 
 
   def __add__(self, other):
