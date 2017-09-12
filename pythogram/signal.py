@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.signal import butter, lfilter
+from scipy.signal import butter, lfilter, resample
 
 class Signal(object):
 
@@ -37,14 +37,20 @@ class Signal(object):
       raise TypeError('non-signal cannot be added to signal')
 
     # different sample rates?
+    # we will always resample towards our own sample rate
+    # that means, if you write a +b, the resulting signal will always
+    # have the same sample rate as a
+    # switch positions if you want it differently
     if self.sample_rate != other.sample_rate:
-      raise TypeError('cannot add signals with different sample rates yet')
-
-    if self._signal.size < other._signal.size:
-      s1 = self._signal
-      s2 = other._signal
+      other_signal = resample(other._signal, int(other.length*self.sample_rate))
     else:
-      s1 = other._signal
+      other_signal = other._signal
+
+    if self._signal.size < other_signal.size:
+      s1 = self._signal
+      s2 = other_signal
+    else:
+      s1 = other_signal
       s2 = self._signal
 
     if s1.size != s2.size:
