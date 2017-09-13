@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.signal import filtfilt, iirfilter, resample
+import wave
 
 class Signal(object):
 
@@ -31,6 +32,9 @@ class Signal(object):
 
     if signal.size != self._signal.size:
       signal = resample(signal, self._signal.size)
+
+    if np.max(np.abs(signal), axis = 0) > 1.0:
+      signal /= np.max(np.abs(signal), axis = 0)
 
     return signal
 
@@ -78,3 +82,13 @@ class Signal(object):
     os._signal = s
 
     return os
+
+
+  # exports the signal into a file
+  def write(self, filename):
+    w = wave.open(filename, 'wb')
+    w.setnchannels(1)
+    w.setsampwidth(2)
+    w.setframerate(self.sample_rate)
+    w.writeframes((32768.0*self.signal).astype(np.int16))
+    w.close()
