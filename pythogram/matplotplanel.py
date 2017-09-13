@@ -9,8 +9,7 @@ from matplotlib.backends.backend_wxagg import (
   NavigationToolbar2WxAgg as NavigationToolbar)
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.figure import Figure
-from scipy.fftpack import fft
-
+from spectral_tool import SpectralTool
 
 
 class MatplotPanel(wx.Panel):
@@ -82,23 +81,10 @@ class MatplotPanel(wx.Panel):
     return self
   
   
-  def spectrum(self, signal):
+  def plotSpectrum(self, signal):
     
     # f: frequencies, pxx: peaks (amplitude)
-    # f, pxx = sig.periodogram(x=signal, fs=self.signal.sample_rate,
-    # scaling='spectrum')
-    
-    sig = signal._signal
-    pxx = abs(fft(sig))
-    pxx = pxx[:(len(pxx) / 2)]
-    f = np.linspace(0.0, signal.sample_rate / 2, len(pxx))
-    pxx = pxx / max(pxx)
-    pxx = 20 * np.log10(1e-6 + pxx)
-    
-    # amp fix: sinus with amp x -> frequency with amp x
-    # pxx = pxx / len(pxx)
-    
-    # f, pxx = sig.periodogram(signal, fs=self.signal.sample_rate)
+    f, pxx = SpectralTool().spectrum(signal)
     
     self.axes.plot(f, pxx, '-')
     self.axes.set_xscale('log')
@@ -109,13 +95,12 @@ class MatplotPanel(wx.Panel):
     return self
   
   
-  def spectrogram(self, signal):
-    sig = signal._signal
-    sig[sig == 0] = np.nan
-    pxx, freq, t, im = self.axes.specgram(x=sig, NFFT=1024,
-                                          Fs=signal.sample_rate, cmap='plasma')
-    # pxx, freq, t = mlab.specgram(x=x, Fs=fs, NFFT=512)
-    # self.axes.pcolormesh(t, freq, pxx, cmap=mpl.cm.hot)
+  def plotSpectrogram(self, signal):
+    # f, t, sxx = SpectralTool().spectrogram(signal)
+    
+    spec, f, t, im = self.axes.specgram(x=signal._signal, NFFT=1024, Fs=signal.sample_rate, cmap='plasma')
+    
+    # self.axes.pcolormesh(t, f, sxx, cmap=mpl.cm.hot)
     # self.axes.set_yscale('symlog')
     # self.axes.imshow(x)
     self.figure.colorbar(im).set_label('Intensity [dB]')

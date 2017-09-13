@@ -75,9 +75,9 @@ class MainPanel(wx.Panel):
                      u'Vega.wav'
     
     # create sine signal and spectrum
-    self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
-    # self.signal = FileSignal(self.file_path)
-    # self.signal = Sine()
+    # self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
+    # self.signal = File(self.file_path)
+    self.signal = WNoise()
     
     # plot the signal
     self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0),
@@ -87,19 +87,19 @@ class MainPanel(wx.Panel):
                                        ylabel='Amplitude').plot(
       signal=self.signal)
     # spectrum
-    self.matplot_panel2 = MatplotPanel(parent=self, xlim=(1, 24000),
+    self.matplot_panel2 = MatplotPanel(parent=self, xlim=(20, 24000),
                                        # ylim=(0, 1e6),
                                        title='Spectrum',
                                        xlabel='Frequency in hertz (Hz)',
                                        ylabel='Amplitude in decibel '
                                               'relative\n to full scale (db '
-                                              'FS)').spectrum(
+                                              'FS)').plotSpectrum(
       signal=self.signal)
     # spectrogram
     self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
                                        xlabel='Time in seconds (s)',
                                        ylabel='Frequency in hertz ('
-                                              'Hz)').spectrogram(
+                                              'Hz)').plotSpectrogram(
       signal=self.signal)
     
     # the main box sizer
