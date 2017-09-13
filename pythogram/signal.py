@@ -5,8 +5,8 @@ import wave
 class Signal(object):
 
   def __init__(self):
-    self._define_attribute('low_cutoff', 0.0)
-    self._define_attribute('high_cutoff', 20000.0)
+    self._define_attribute('_low_cutoff', None)
+    self._define_attribute('_high_cutoff', None)
     self._define_attribute('sample_rate', 44100)
     self._define_attribute('_signal', np.zeros(0, dtype=np.float32))
     self._define_attribute('length', 1.0)
@@ -92,3 +92,52 @@ class Signal(object):
     w.setframerate(self.sample_rate)
     w.writeframes((32768.0*self.signal).astype(np.int16))
     w.close()
+
+
+  @property
+  def low_cutoff(self):
+    if self._low_cutoff is None:
+      return 3.0
+
+    return self._low_cutoff
+
+  @low_cutoff.setter
+  def low_cutoff(self, value):
+
+    if value is None:
+      self._low_cutoff = None
+      return
+
+    # may not drop below 3.0
+    if value < 3.0:
+      raise ValueError('low cutoff must at least be 3 hz')
+
+    if value >= self.high_cutoff:
+      raise ValueError('low cutoff may not be higher or equal high cutoff')
+
+    self._low_cutoff = float(value)
+
+
+  @property
+  def high_cutoff(self):
+
+    if self._high_cutoff is None:
+      return float(self.sample_rate*0.5)-5
+
+    return self._high_cutoff
+
+
+  @high_cutoff.setter
+  def high_cutoff(self, value):
+
+    if value is None:
+      self._high_cutoff = None
+      return
+
+    if value <= self.low_cutoff:
+      raise ValueError("high cutoff may not be equal or lower than the low cutoff")
+
+    if value > float(self.sample_rate*0.5)-5:
+      raise ValueError("high cutoff may not exceed %f"%(float(self.sample_rate*0.5)-5))
+
+    self._high_cutoff = float(value)
