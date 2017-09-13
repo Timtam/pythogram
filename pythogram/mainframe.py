@@ -2,15 +2,13 @@
 
 import os
 
-import numpy as np
 import wx
-from scipy import signal as sig
-from scipy.fftpack import fft, fftfreq
 
 from const import *
 from controlpanel import ControlPanel
 from matplotplanel import MatplotPanel
 from signals import *
+
 
 
 class MainFrame(wx.Frame):
@@ -73,41 +71,36 @@ class MainPanel(wx.Panel):
     # control panel for user interaction
     self.control_panel = ControlPanel(self)
     
-    self.file_path= u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne Vega.wav'
+    self.file_path = u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne ' \
+                     u'Vega.wav'
     
     # create sine signal and spectrum
     self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
-    #self.signal = FileSignal(self.file_path)
-    
-    t = np.arange(0.0, self.signal.length, (1.0 / self.signal.sample_rate))
-    
-    # f: frequencies, pxx: peaks (amplitude)
-    # f, pxx = sig.periodogram(x=signal, fs=self.signal.sample_rate, scaling='spectrum')
-    
-    signal = self.signal._signal
-    pxx = abs(fft(signal))
-    pxx = pxx[:(len(pxx)/2)]
-    f = np.linspace(0.0, self.signal.sample_rate/2, len(pxx))
-    pxx = pxx/max(pxx)
-    pxx = 20*np.log10(1e-8+pxx)
-    
-    # amp fix: sinus with amp x -> frequency with amp x
-    # pxx = pxx / len(pxx)
+    # self.signal = FileSignal(self.file_path)
+    # self.signal = Sine()
     
     # plot the signal
-    self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0), #ylim=(-1.0, 1.0),
-                                       title='Signal', xlabel='Time in seconds (s)',
-                                       ylabel='Amplitude').plot(x=t,
-                                                                y=self.signal._signal)
-    #spectrum
-    self.matplot_panel3 = MatplotPanel(parent=self, xlim=(1, 24000), #ylim=(0, 1e6),
-                                       title='Spectrum', xlabel='Frequency in hertz (Hz)',
-                                       ylabel='Amplitude in decibel relative\n to full scale (db FS)').spectrum(x=f, y=pxx)
-    # spectrogram
-    self.matplot_panel2 = MatplotPanel(parent=self, title='Spectrogram',
+    self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0),
+                                       # ylim=(-1.0, 1.0),
+                                       title='Signal',
                                        xlabel='Time in seconds (s)',
-                                       ylabel='Frequency in hertz (Hz)').spectrogram(
-      x=self.signal._signal, fs=self.signal.sample_rate)
+                                       ylabel='Amplitude').plot(
+      signal=self.signal)
+    # spectrum
+    self.matplot_panel2 = MatplotPanel(parent=self, xlim=(1, 24000),
+                                       # ylim=(0, 1e6),
+                                       title='Spectrum',
+                                       xlabel='Frequency in hertz (Hz)',
+                                       ylabel='Amplitude in decibel '
+                                              'relative\n to full scale (db '
+                                              'FS)').spectrum(
+      signal=self.signal)
+    # spectrogram
+    self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
+                                       xlabel='Time in seconds (s)',
+                                       ylabel='Frequency in hertz ('
+                                              'Hz)').spectrogram(
+      signal=self.signal)
     
     # the main box sizer
     self.main_vbox = wx.BoxSizer(wx.VERTICAL)
@@ -136,3 +129,15 @@ class MainPanel(wx.Panel):
     # all together in main box
     self.main_vbox.Add(item=self.top_hbox, proportion=6, flag=wx.EXPAND)
     self.main_vbox.Add(item=self.bottom_box, proportion=5, flag=wx.EXPAND)
+    
+    # self.signal = Sine(freq=100.0, l=10.0, amp=1.0, srate=44100)
+    #
+    # signal = self.signal._signal
+    # pxx = abs(fft(signal))
+    # pxx = pxx[:(len(pxx)/2)]
+    # f = np.linspace(0.0, self.signal.sample_rate/2, len(pxx))
+    # pxx = pxx/max(pxx)
+    # pxx = 20*np.log10(1e-6+pxx)
+    #
+    # self.matplot_panel2.axes.clear()
+    # self.matplot_panel2.spectrum(x=f, y=pxx)

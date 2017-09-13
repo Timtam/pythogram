@@ -1,14 +1,16 @@
-import matplotlib.pyplot as plt
 # import matplotlib.mlab as mlab
 import matplotlib as mpl
+import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import numpy as np
 import wx
 from matplotlib.backends.backend_wxagg import (
   FigureCanvasWxAgg as FigureCanvas,
   NavigationToolbar2WxAgg as NavigationToolbar)
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.figure import Figure
-import numpy as np
+from scipy.fftpack import fft
+
 
 
 class MatplotPanel(wx.Panel):
@@ -74,27 +76,44 @@ class MatplotPanel(wx.Panel):
                    flag=wx.GROW)
   
   
-  def plot(self, x, y=None):
-    self.axes.plot(x, y)
+  def plot(self, signal):
+    t = np.arange(0.0, signal.length, (1.0 / signal.sample_rate))
+    self.axes.plot(t, signal._signal)
     return self
   
   
-  def spectrum(self, x, y=None):
-    if y is None:
-      self.axes.plot(x, '-')
-    else:
-      self.axes.plot(x, y, '-')
+  def spectrum(self, signal):
+    
+    # f: frequencies, pxx: peaks (amplitude)
+    # f, pxx = sig.periodogram(x=signal, fs=self.signal.sample_rate,
+    # scaling='spectrum')
+    
+    sig = signal._signal
+    pxx = abs(fft(sig))
+    pxx = pxx[:(len(pxx) / 2)]
+    f = np.linspace(0.0, signal.sample_rate / 2, len(pxx))
+    pxx = pxx / max(pxx)
+    pxx = 20 * np.log10(1e-6 + pxx)
+    
+    # amp fix: sinus with amp x -> frequency with amp x
+    # pxx = pxx / len(pxx)
+    
+    # f, pxx = sig.periodogram(signal, fs=self.signal.sample_rate)
+    
+    self.axes.plot(f, pxx, '-')
     self.axes.set_xscale('log')
     # self.axes.set_yscale('symlog')
-    self.axes.set_xticks([20, 200, 2000, 20000])
+    self.axes.set_xticks([20, 100, 200, 1000, 2000, 10000, 20000])
     self.axes.grid(self.grid, which='both', ls='-')
     self.axes.get_xaxis().set_major_formatter(ticker.ScalarFormatter())
     return self
   
   
-  def spectrogram(self, x, fs):
-    x[x==0]=np.nan
-    pxx, freq, t, im = self.axes.specgram(x=x, NFFT=1024, Fs=fs, cmap='plasma')
+  def spectrogram(self, signal):
+    sig = signal._signal
+    sig[sig == 0] = np.nan
+    pxx, freq, t, im = self.axes.specgram(x=sig, NFFT=1024,
+                                          Fs=signal.sample_rate, cmap='plasma')
     # pxx, freq, t = mlab.specgram(x=x, Fs=fs, NFFT=512)
     # self.axes.pcolormesh(t, freq, pxx, cmap=mpl.cm.hot)
     # self.axes.set_yscale('symlog')
