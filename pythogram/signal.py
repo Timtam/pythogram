@@ -96,10 +96,19 @@ class Signal(object):
 
   @property
   def low_cutoff(self):
-    if self._low_cutoff is None:
-      return 3.0
 
-    return self._low_cutoff
+    if self._low_cutoff is None:
+      return self.sample_rate*0.5*0.00045
+
+    # verifying current frequency
+    # problem: user might change sampling rate or whatever on the fly
+    # this might render the current frequencies invalid
+    try:
+      self.low_cutoff = self._low_cutoff
+      return self._low_cutoff
+    except ValueError:
+      self._low_cutoff = None
+      return self.low_cutoff
 
   @low_cutoff.setter
   def low_cutoff(self, value):
@@ -109,8 +118,8 @@ class Signal(object):
       return
 
     # may not drop below 3.0
-    if value < 3.0:
-      raise ValueError('low cutoff must at least be 3 hz')
+    if value < self.sample_rate*0.5*0.00045:
+      raise ValueError('low cutoff must at least be %f hz'%(self.sample_rate*0.5*0.00045))
 
     if value >= self.high_cutoff:
       raise ValueError('low cutoff may not be higher or equal high cutoff')
@@ -122,9 +131,15 @@ class Signal(object):
   def high_cutoff(self):
 
     if self._high_cutoff is None:
-      return float(self.sample_rate*0.5)-5
+      return float(self.sample_rate*0.5)-(self.sample_rate*0.5*0.045)
 
-    return self._high_cutoff
+    # see low_cutoff getter above
+    try:
+      self.high_cutoff = self._high_cutoff
+      return self._high_cutoff
+    except ValueError:
+      self._high_cutoff = None
+      return self.high_cutoff
 
 
   @high_cutoff.setter
@@ -137,7 +152,7 @@ class Signal(object):
     if value <= self.low_cutoff:
       raise ValueError("high cutoff may not be equal or lower than the low cutoff")
 
-    if value > float(self.sample_rate*0.5)-5:
-      raise ValueError("high cutoff may not exceed %f"%(float(self.sample_rate*0.5)-5))
+    if value > float(self.sample_rate*0.5)-(self.sample_rate*0.5*0.05):
+      raise ValueError("high cutoff may not exceed %f"%(float(self.sample_rate*0.5)-(self.sample_rate*0.5*0.045)))
 
     self._high_cutoff = float(value)
