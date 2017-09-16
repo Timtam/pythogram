@@ -25,28 +25,41 @@ class ControlPanel(wx.Panel):
                              style=wx.OPEN | wx.CHANGE_DIR | wx.FILE_MUST_EXIST)
     
     bandpass = self.buildBandpassBox()
+    time_options = self.buildTimeOptions()
     test_signals = self.buildTestSignalsBox()
     output = self.buildOutput()
     
     left_vbox = wx.BoxSizer(wx.VERTICAL)
     left_vbox.Add(bandpass, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
-    left_vbox.Add(output, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
+    left_vbox.Add(time_options, proportion=0, flag=wx.EXPAND | wx.ALL,
+                  border=10)
+    
+    right_vbox = wx.BoxSizer(wx.VERTICAL)
+    right_vbox.Add(test_signals, proportion=1, flag=wx.EXPAND | wx.ALL,
+                   border=10)
+    right_vbox.Add(output, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
     
     hbox = wx.BoxSizer(wx.HORIZONTAL)
     hbox.Add(left_vbox, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
-    hbox.Add(test_signals, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
+    hbox.Add(right_vbox, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
     
     self.SetSizer(hbox)
   
   
   def buildBandpassBox(self):
     bandpass_box = wx.StaticBox(self, label="Bandpass filter")
-    text_start_fq = wx.StaticText(bandpass_box, label="Low frequency:")
+    text_start_fq = wx.StaticText(bandpass_box, label="Low cutoff:")
     self.input_start_fq = IntCtrl(bandpass_box)
     self.input_start_fq.SetMaxLength(5)
-    text_end_fq = wx.StaticText(bandpass_box, label="High frequency:")
+    self.input_start_fq.SetBounds(min=10, max=20000)
+    self.input_start_fq.SetLimited(True)
+    self.input_start_fq.SetValue(20)
+    text_end_fq = wx.StaticText(bandpass_box, label="High cutoff:")
     self.input_end_fq = IntCtrl(bandpass_box)
+    self.input_end_fq.SetBounds(min=20, max=25000)
+    self.input_end_fq.SetLimited(True)
     self.input_end_fq.SetMaxLength(5)
+    self.input_end_fq.SetValue(20000)
     button_apply_bandpass = wx.Button(bandpass_box,
                                       label="Apply bandpass filter")
     
@@ -60,9 +73,43 @@ class ControlPanel(wx.Panel):
     gridbag_sizer.Add(button_apply_bandpass, pos=(4, 3), flag=wx.EXPAND)
     
     gridbag_sizer.AddGrowableCol(2)
-    gridbag_sizer.AddGrowableRow(3)
+    # gridbag_sizer.AddGrowableRow(3)
     
     box_sizer = wx.StaticBoxSizer(bandpass_box, wx.VERTICAL)
+    box_sizer.Add(gridbag_sizer, proportion=1, flag=wx.EXPAND)
+    
+    return box_sizer
+  
+  
+  def buildTimeOptions(self):
+    time_box = wx.StaticBox(self, label="Displayed time limits")
+    text_start_time = wx.StaticText(time_box, label="Start:")
+    self.input_start_time = IntCtrl(time_box)
+    self.input_start_time.SetMaxLength(3)
+    self.input_start_time.SetBounds(min=0)
+    self.input_start_time.SetLimited(True)
+    self.input_start_time.SetValue(0)
+    text_end_time = wx.StaticText(time_box, label="End:")
+    self.input_end_time = IntCtrl(time_box)
+    self.input_end_time.SetBounds(min=0)
+    self.input_end_time.SetLimited(True)
+    self.input_end_time.SetMaxLength(3)
+    self.input_end_time.SetValue(1)
+    button_apply_time = wx.Button(time_box, label="Apply time limits")
+    
+    button_apply_time.Bind(wx.EVT_BUTTON, self.onApplyTime)
+    
+    gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
+    gridbag_sizer.Add(text_start_time, pos=(1, 1), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_start_time, pos=(1, 3), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_end_time, pos=(2, 1), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_end_time, pos=(2, 3), flag=wx.EXPAND)
+    gridbag_sizer.Add(button_apply_time, pos=(4, 3), flag=wx.EXPAND)
+    
+    gridbag_sizer.AddGrowableCol(2)
+    # gridbag_sizer.AddGrowableRow(3)
+    
+    box_sizer = wx.StaticBoxSizer(time_box, wx.VERTICAL)
     box_sizer.Add(gridbag_sizer, proportion=1, flag=wx.EXPAND)
     
     return box_sizer
@@ -142,12 +189,9 @@ class ControlPanel(wx.Panel):
   def buildOutput(self):
     output_box = wx.StaticBox(self, label="Information output")
     text_fs = wx.StaticText(output_box, label="Sample rate:")
-    self.output_fs = IntCtrl(output_box)
-    self.output_fs.SetMaxLength(5)
+    self.output_fs = wx.StaticText(output_box, label="000000")
     text_len = wx.StaticText(output_box, label="Length:")
-    self.output_len = NumCtrl(output_box)
-    self.output_len.SetLimitOnFieldChange(True)
-    self.output_len.SetBounds(min=0.01, max=10.0)
+    self.output_len = wx.StaticText(output_box, label="0000")
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
     gridbag_sizer.Add(text_fs, pos=(1, 1), flag=wx.EXPAND)
@@ -155,7 +199,7 @@ class ControlPanel(wx.Panel):
     gridbag_sizer.Add(text_len, pos=(2, 1), flag=wx.EXPAND)
     gridbag_sizer.Add(self.output_len, pos=(2, 3), flag=wx.EXPAND)
     
-    gridbag_sizer.AddGrowableCol(2)
+    # gridbag_sizer.AddGrowableCol(2)
     
     box_sizer = wx.StaticBoxSizer(output_box, wx.VERTICAL)
     box_sizer.Add(gridbag_sizer, proportion=1, flag=wx.EXPAND)
@@ -164,9 +208,20 @@ class ControlPanel(wx.Panel):
   
   
   def onApplyBandpass(self, event):
-    top_parent = self.GetTopLevelParent()
-    top_parent.main_panel.signal._low_cutoff = self.input_start_fq.GetValue()
-    top_parent.main_panel.signal._high_cutoff = self.input_end_fq.GetValue()
+    if self.input_end_time.GetValue() <= self.input_start_time.GetValue():
+      print("End time needs to be greater than start time")
+      return
+    parent = self.GetParent()
+    parent.signal.low_cutoff = self.input_start_fq.GetValue()
+    parent.signal.high_cutoff = self.input_end_fq.GetValue()
+    parent.plotSignal(parent.signal)
+  
+  
+  def onApplyTime(self, event):
+    parent = self.GetParent()
+    parent.matplot_panel1.setXLimits(
+      (self.input_start_time.GetValue(), self.input_end_time.GetValue()))
+    parent.matplot_panel1.plot(parent.signal)
   
   
   def onSignalButton(self, event):

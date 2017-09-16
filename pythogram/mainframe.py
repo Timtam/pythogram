@@ -8,6 +8,7 @@ import wx
 from const import *
 from controlpanel import ControlPanel
 from matplotplanel import MatplotPanel
+from signals import Sine
 
 
 
@@ -76,40 +77,28 @@ class MainPanel(wx.Panel):
     self.file_path = u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne ' \
                      u'Vega.wav'
     
-    # create sine signal and spectrum
-    # self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
-    # self.signal = File(self.file_path)
-    # self.signal = WNoise()
+    # create sine signal
+    self.signal = Sine()
     
     self.createMatplotPanels()
     
     # the main box sizer
-    self.main_vbox = wx.BoxSizer(wx.VERTICAL)
-    self.SetSizer(self.main_vbox)
+    main_hbox = wx.BoxSizer(wx.HORIZONTAL)
+    self.SetSizer(main_hbox)
     
-    # top left box for control panel
-    self.top_left_box = wx.BoxSizer()
-    self.top_left_box.Add(item=self.control_panel, proportion=1, flag=wx.EXPAND)
+    # left box containing control panel and spectrogram
+    left_vbox = wx.BoxSizer(wx.VERTICAL)
+    left_vbox.Add(item=self.control_panel, proportion=7, flag=wx.EXPAND)
+    left_vbox.Add(item=self.matplot_panel3, proportion=6, flag=wx.EXPAND)
     
-    # top right box for signal and spectrum
-    self.top_right_vbox = wx.BoxSizer(wx.VERTICAL)
-    self.top_right_vbox.Add(item=self.matplot_panel1, proportion=1,
-                            flag=wx.EXPAND)
-    self.top_right_vbox.Add(item=self.matplot_panel2, proportion=1,
-                            flag=wx.EXPAND)
-    
-    # top box containing control panel, signal and spectrum
-    self.top_hbox = wx.BoxSizer(wx.HORIZONTAL)
-    self.top_hbox.Add(item=self.top_left_box, proportion=3, flag=wx.EXPAND)
-    self.top_hbox.Add(item=self.top_right_vbox, proportion=2, flag=wx.EXPAND)
-    
-    # bottom box for spectrogram
-    self.bottom_box = wx.BoxSizer()
-    self.bottom_box.Add(item=self.matplot_panel3, proportion=1, flag=wx.EXPAND)
+    # right box for signal and spectrum
+    right_vbox = wx.BoxSizer(wx.VERTICAL)
+    right_vbox.Add(item=self.matplot_panel1, proportion=1, flag=wx.EXPAND)
+    right_vbox.Add(item=self.matplot_panel2, proportion=1, flag=wx.EXPAND)
     
     # all together in main box
-    self.main_vbox.Add(item=self.top_hbox, proportion=6, flag=wx.EXPAND)
-    self.main_vbox.Add(item=self.bottom_box, proportion=5, flag=wx.EXPAND)
+    main_hbox.Add(item=left_vbox, proportion=4, flag=wx.EXPAND)
+    main_hbox.Add(item=right_vbox, proportion=3, flag=wx.EXPAND)
   
   
   def createMatplotPanels(self):
@@ -168,5 +157,5 @@ class MainPanel(wx.Panel):
   
   def setInformation(self, signal):
     if self.control_panel is not None:
-      self.control_panel.output_fs.SetValue(signal.sample_rate)
-      self.control_panel.output_len.SetValue(signal.length)
+      self.control_panel.output_fs.SetLabel(str(signal.sample_rate))
+      self.control_panel.output_len.SetLabel(str(signal.length))
