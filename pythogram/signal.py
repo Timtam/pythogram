@@ -20,30 +20,35 @@ class Signal(object):
 
   @property
   def signal(self):
-    # processing the filtering in here
-    # nyquist frequency
 
-    # securing the filters against under/overflow (e.g. after changing the sample rate)
-    try:
-      self.high_cutoff = self._high_cutoff
-    except ValueError:
-      self.high_cutoff = None
+    if self._low_cutoff is not None or self._high_cutoff is not None:
+      # processing the filtering in here
+      # nyquist frequency
 
-    try:
-      self.low_cutoff = self._low_cutoff
-    except ValueError:
-      self.low_cutoff = None
+      # securing the filters against under/overflow (e.g. after changing the sample rate)
+      try:
+        self.high_cutoff = self._high_cutoff
+      except ValueError:
+        self.high_cutoff = None
 
-    nyq = 0.5 * self.sample_rate
-    low = min(self.low_cutoff / nyq, 1)
-    high = min(self.high_cutoff / nyq, 1)
+      try:
+        self.low_cutoff = self._low_cutoff
+      except ValueError:
+        self.low_cutoff = None
 
-    b, a = iirfilter(5, Wn=[low, high], btype='bandpass', ftype='bessel')
+      nyq = 0.5 * self.sample_rate
+      low = min(self.low_cutoff / nyq, 1)
+      high = min(self.high_cutoff / nyq, 1)
 
-    signal = filtfilt(b, a, self._signal).astype(np.float32)
+      b, a = iirfilter(5, Wn=[low, high], btype='bandpass', ftype='bessel')
 
-    if signal.size != self._signal.size:
-      signal = resample(signal, self._signal.size)
+      signal = filtfilt(b, a, self._signal).astype(np.float32)
+
+      if signal.size != self._signal.size:
+        signal = resample(signal, self._signal.size)
+
+    else:
+      signal = self._signal
 
     if np.max(np.abs(signal), axis = 0) > 1.0:
       signal /= np.max(np.abs(signal), axis = 0)
