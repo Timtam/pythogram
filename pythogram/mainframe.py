@@ -25,18 +25,18 @@ class MainFrame(wx.Frame):
     
     menu_bar = wx.MenuBar()
     menu_file = wx.Menu()
-    file_open = wx.MenuItem(id=wx.ID_OPEN, text="&Open file\tCtrl+O",
-                            help="Open a file with explorer",
-                            kind=wx.ITEM_NORMAL)
+    # file_open = wx.MenuItem(id=wx.ID_OPEN, text="&Open file\tCtrl+O",
+    #                         help="Open a file with explorer",
+    #                         kind=wx.ITEM_NORMAL)
     file_close = wx.MenuItem(id=wx.ID_EXIT, text="&Close\tCtrl+C",
                              help="Close the application", kind=wx.ITEM_NORMAL)
-    menu_file.AppendItem(file_open)
+    # menu_file.AppendItem(file_open)
     menu_file.AppendItem(file_close)
     menu_bar.Append(menu=menu_file, title="&File")
     self.SetMenuBar(menu_bar)
     
     self.Bind(wx.EVT_MENU, self.onQuit, file_close)
-    self.Bind(wx.EVT_MENU, self.onOpenFile, file_open)
+    # self.Bind(wx.EVT_MENU, self.onOpenFile, file_open)
     
     self.dlg = wx.FileDialog(self, message="Choose a file",
                              defaultDir=os.getcwd(), defaultFile="",
@@ -52,10 +52,10 @@ class MainFrame(wx.Frame):
     self.SetStatusText("Initialized")
   
   
-  def onOpenFile(self, event):
-    if self.dlg.ShowModal() == wx.ID_OK:
-      self.file_path = self.dlg.GetPath()
-      self.SetStatusText("You chose following file: " + self.file_path)
+  # def onOpenFile(self, event):
+  #   if self.dlg.ShowModal() == wx.ID_OK:
+  #     self.file_path = self.dlg.GetPath()
+  #     self.SetStatusText("You chose following file: " + self.file_path)
   
   
   def onQuit(self, event):
@@ -88,8 +88,8 @@ class MainPanel(wx.Panel):
     
     # left box containing control panel and spectrogram
     left_vbox = wx.BoxSizer(wx.VERTICAL)
-    left_vbox.Add(item=self.control_panel, proportion=7, flag=wx.EXPAND)
-    left_vbox.Add(item=self.matplot_panel3, proportion=6, flag=wx.EXPAND)
+    left_vbox.Add(item=self.control_panel, proportion=0, flag=wx.EXPAND)
+    left_vbox.Add(item=self.matplot_panel3, proportion=1, flag=wx.EXPAND)
     
     # right box for signal and spectrum
     right_vbox = wx.BoxSizer(wx.VERTICAL)

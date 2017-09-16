@@ -1,8 +1,7 @@
 import os
 
 import wx
-from wx.lib.intctrl import IntCtrl
-from wx.lib.masked.numctrl import NumCtrl
+from wx.lib.masked import NumCtrl
 
 from const import *
 
@@ -49,17 +48,13 @@ class ControlPanel(wx.Panel):
   def buildBandpassBox(self):
     bandpass_box = wx.StaticBox(self, label="Bandpass filter")
     text_start_fq = wx.StaticText(bandpass_box, label="Low cutoff:")
-    self.input_start_fq = IntCtrl(bandpass_box)
-    self.input_start_fq.SetMaxLength(5)
-    self.input_start_fq.SetBounds(min=10, max=20000)
-    self.input_start_fq.SetLimited(True)
-    self.input_start_fq.SetValue(20)
+    self.input_start_fq = NumCtrl(bandpass_box, value=20, integerWidth=5,
+                                  fractionWidth=0, allowNegative=False, min=20,
+                                  max=20000)
     text_end_fq = wx.StaticText(bandpass_box, label="High cutoff:")
-    self.input_end_fq = IntCtrl(bandpass_box)
-    self.input_end_fq.SetBounds(min=20, max=25000)
-    self.input_end_fq.SetLimited(True)
-    self.input_end_fq.SetMaxLength(5)
-    self.input_end_fq.SetValue(20000)
+    self.input_end_fq = NumCtrl(bandpass_box, value=20000.0, integerWidth=5,
+                                fractionWidth=0, allowNegative=False, min=100,
+                                max=25000)
     button_apply_bandpass = wx.Button(bandpass_box,
                                       label="Apply bandpass filter")
     
@@ -84,17 +79,13 @@ class ControlPanel(wx.Panel):
   def buildTimeOptions(self):
     time_box = wx.StaticBox(self, label="Displayed time limits")
     text_start_time = wx.StaticText(time_box, label="Start:")
-    self.input_start_time = IntCtrl(time_box)
-    self.input_start_time.SetMaxLength(3)
-    self.input_start_time.SetBounds(min=0)
-    self.input_start_time.SetLimited(True)
-    self.input_start_time.SetValue(0)
+    self.input_start_time = NumCtrl(time_box, value=0.0, integerWidth=3,
+                                    fractionWidth=2, allowNegative=False,
+                                    min=0.00)
     text_end_time = wx.StaticText(time_box, label="End:")
-    self.input_end_time = IntCtrl(time_box)
-    self.input_end_time.SetBounds(min=0)
-    self.input_end_time.SetLimited(True)
-    self.input_end_time.SetMaxLength(3)
-    self.input_end_time.SetValue(1)
+    self.input_end_time = NumCtrl(time_box, value=1.0, integerWidth=3,
+                                  fractionWidth=2, allowNegative=False,
+                                  min=0.01)
     button_apply_time = wx.Button(time_box, label="Apply time limits")
     
     button_apply_time.Bind(wx.EVT_BUTTON, self.onApplyTime)
@@ -119,23 +110,21 @@ class ControlPanel(wx.Panel):
     testsignals_box = wx.StaticBox(self, label="Generate test signals")
     
     text_freq = wx.StaticText(testsignals_box, label="Freq. (Hz):")
-    self.input_freq = IntCtrl(testsignals_box)
-    self.input_freq.SetMaxLength(5)
-    self.input_freq.SetValue(440)
+    self.input_freq = NumCtrl(testsignals_box, value=440.0, integerWidth=5,
+                              fractionWidth=1, allowNegative=False, min=1.0,
+                              max=50000.0)
     text_len = wx.StaticText(testsignals_box, label="Len. (s):")
-    self.input_len = NumCtrl(testsignals_box)
-    self.input_len.SetLimitOnFieldChange(True)
-    self.input_len.SetBounds(min=0.01, max=10.0)
-    self.input_len.SetValue(1.0)
+    self.input_len = NumCtrl(testsignals_box, value=2.0, integerWidth=3,
+                             fractionWidth=2, allowNegative=False, min=0.10,
+                             max=100.00)
     text_amp = wx.StaticText(testsignals_box, label="Amp.:")
-    self.input_amp = NumCtrl(testsignals_box)
-    self.input_amp.SetLimitOnFieldChange(True)
-    self.input_amp.SetBounds(min=0.01, max=10.0)
-    self.input_amp.SetValue(1.0)
+    self.input_amp = NumCtrl(testsignals_box, value=1.0, integerWidth=2,
+                             fractionWidth=2, allowNegative=False, min=0.01,
+                             max=10.00)
     text_fs = wx.StaticText(testsignals_box, label="Sample rate (Hz):")
-    self.input_fs = IntCtrl(testsignals_box)
-    self.input_fs.SetMaxLength(6)
-    self.input_fs.SetValue(44100)
+    self.input_fs = NumCtrl(testsignals_box, value=44100, integerWidth=6,
+                            fractionWidth=0, allowNegative=False, min=1.0,
+                            max=200000.0)
     
     button_file = wx.Button(testsignals_box, id=ID_FILE_SIGNAL,
                             label="Open file")
