@@ -20,7 +20,7 @@ class MainFrame(wx.Frame):
                             wx.RESIZE_BORDER | wx.SYSTEM_MENU | wx.CAPTION |
                             wx.CLOSE_BOX | wx.CLIP_CHILDREN | wx.FRAME_SHAPED)
     self.SetBackgroundColour("black")
-    self.SetMinClientSize((192, 108))
+    self.SetMinClientSize((1100, 800))
     self.Center()
     
     menu_bar = wx.MenuBar()
@@ -50,8 +50,8 @@ class MainFrame(wx.Frame):
     
     self.status_bar = self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
-  
-  
+    
+    
   # def onOpenFile(self, event):
   #   if self.dlg.ShowModal() == wx.ID_OK:
   #     self.file_path = self.dlg.GetPath()
@@ -97,8 +97,8 @@ class MainPanel(wx.Panel):
     right_vbox.Add(item=self.matplot_panel2, proportion=1, flag=wx.EXPAND)
     
     # all together in main box
-    main_hbox.Add(item=left_vbox, proportion=4, flag=wx.EXPAND)
-    main_hbox.Add(item=right_vbox, proportion=3, flag=wx.EXPAND)
+    main_hbox.Add(item=left_vbox, proportion=5, flag=wx.EXPAND)
+    main_hbox.Add(item=right_vbox, proportion=4, flag=wx.EXPAND)
   
   
   def createMatplotPanels(self):

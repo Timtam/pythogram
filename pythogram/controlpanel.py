@@ -43,7 +43,10 @@ class ControlPanel(wx.Panel):
     hbox.Add(right_vbox, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
     
     self.SetSizer(hbox)
-  
+    
+    self.Fit()
+    self.SetMinSize(self.GetSize())
+    
   
   def buildBandpassBox(self):
     bandpass_box = wx.StaticBox(self, label="Bandpass filter")
@@ -67,7 +70,7 @@ class ControlPanel(wx.Panel):
     gridbag_sizer.Add(self.input_end_fq, pos=(2, 3), flag=wx.EXPAND)
     gridbag_sizer.Add(button_apply_bandpass, pos=(4, 3), flag=wx.EXPAND)
     
-    gridbag_sizer.AddGrowableCol(2)
+    # gridbag_sizer.AddGrowableCol(2)
     # gridbag_sizer.AddGrowableRow(3)
     
     box_sizer = wx.StaticBoxSizer(bandpass_box, wx.VERTICAL)
@@ -97,7 +100,7 @@ class ControlPanel(wx.Panel):
     gridbag_sizer.Add(self.input_end_time, pos=(2, 3), flag=wx.EXPAND)
     gridbag_sizer.Add(button_apply_time, pos=(4, 3), flag=wx.EXPAND)
     
-    gridbag_sizer.AddGrowableCol(2)
+    # gridbag_sizer.AddGrowableCol(2)
     # gridbag_sizer.AddGrowableRow(3)
     
     box_sizer = wx.StaticBoxSizer(time_box, wx.VERTICAL)
@@ -169,7 +172,7 @@ class ControlPanel(wx.Panel):
     
     box_sizer = wx.StaticBoxSizer(testsignals_box, wx.VERTICAL)
     box_sizer.Add(gridbag_sizer_top, proportion=1, flag=wx.EXPAND)
-    box_sizer.AddStretchSpacer(1)
+    # box_sizer.AddStretchSpacer(1)
     box_sizer.Add(gridbag_sizer_bottom, proportion=0, flag=wx.EXPAND)
     
     return box_sizer
