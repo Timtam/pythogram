@@ -22,6 +22,18 @@ class Signal(object):
   def signal(self):
     # processing the filtering in here
     # nyquist frequency
+
+    # securing the filters against under/overflow (e.g. after changing the sample rate)
+    try:
+      self.high_cutoff = self._high_cutoff
+    except ValueError:
+      self.high_cutoff = None
+
+    try:
+      self.low_cutoff = self._low_cutoff
+    except ValueError:
+      self.low_cutoff = None
+
     nyq = 0.5 * self.sample_rate
     low = min(self.low_cutoff / nyq, 1)
     high = min(self.high_cutoff / nyq, 1)
@@ -100,15 +112,7 @@ class Signal(object):
     if self._low_cutoff is None:
       return self.sample_rate*0.5*0.00045
 
-    # verifying current frequency
-    # problem: user might change sampling rate or whatever on the fly
-    # this might render the current frequencies invalid
-    try:
-      self.low_cutoff = self._low_cutoff
-      return self._low_cutoff
-    except ValueError:
-      self._low_cutoff = None
-      return self.low_cutoff
+    return self._low_cutoff
 
   @low_cutoff.setter
   def low_cutoff(self, value):
@@ -133,13 +137,7 @@ class Signal(object):
     if self._high_cutoff is None:
       return float(self.sample_rate*0.5)-(self.sample_rate*0.5*0.045)
 
-    # see low_cutoff getter above
-    try:
-      self.high_cutoff = self._high_cutoff
-      return self._high_cutoff
-    except ValueError:
-      self._high_cutoff = None
-      return self.high_cutoff
+    return self._high_cutoff
 
 
   @high_cutoff.setter
