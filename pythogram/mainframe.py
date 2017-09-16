@@ -1,5 +1,6 @@
 # coding: UTF-8
 
+import importlib
 import os
 
 import wx
@@ -7,7 +8,6 @@ import wx
 from const import *
 from controlpanel import ControlPanel
 from matplotplanel import MatplotPanel
-from signals import *
 
 
 
@@ -68,6 +68,8 @@ class MainPanel(wx.Panel):
     wx.Panel.__init__(self, parent=parent, style=wx.BORDER_SUNKEN)
     self.SetBackgroundColour("white")
     
+    self.init = True
+    
     # control panel for user interaction
     self.control_panel = ControlPanel(self)
     
@@ -77,30 +79,9 @@ class MainPanel(wx.Panel):
     # create sine signal and spectrum
     # self.signal = Sine(freq=7648.0, l=10.0, amp=1.0, srate=44100)
     # self.signal = File(self.file_path)
-    self.signal = WNoise()
+    # self.signal = WNoise()
     
-    # plot the signal
-    self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0),
-                                       # ylim=(-1.0, 1.0),
-                                       title='Signal',
-                                       xlabel='Time in seconds (s)',
-                                       ylabel='Amplitude').plot(
-      signal=self.signal)
-    # spectrum
-    self.matplot_panel2 = MatplotPanel(parent=self, xlim=(20, 24000),
-                                       # ylim=(0, 1e6),
-                                       title='Spectrum',
-                                       xlabel='Frequency in hertz (Hz)',
-                                       ylabel='Amplitude in decibel '
-                                              'relative\n to full scale (db '
-                                              'FS)').plotSpectrum(
-      signal=self.signal)
-    # spectrogram
-    self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
-                                       xlabel='Time in seconds (s)',
-                                       ylabel='Frequency in hertz ('
-                                              'Hz)').plotSpectrogram(
-      signal=self.signal)
+    self.createMatplotPanels()
     
     # the main box sizer
     self.main_vbox = wx.BoxSizer(wx.VERTICAL)
@@ -129,15 +110,63 @@ class MainPanel(wx.Panel):
     # all together in main box
     self.main_vbox.Add(item=self.top_hbox, proportion=6, flag=wx.EXPAND)
     self.main_vbox.Add(item=self.bottom_box, proportion=5, flag=wx.EXPAND)
+  
+  
+  def createMatplotPanels(self):
+    # plot the signal
+    self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0),
+                                       # ylim=(-1.0, 1.0),
+                                       title='Signal',
+                                       xlabel='Time in seconds (s)',
+                                       ylabel='Amplitude')
+    # spectrum
+    self.matplot_panel2 = MatplotPanel(parent=self, xlim=(20, 24000),
+                                       # ylim=(0, 1e6),
+                                       title='Spectrum',
+                                       xlabel='Frequency in hertz (Hz)',
+                                       ylabel='Amplitude in decibel '
+                                              'relative\n to full scale (db '
+                                              'FS)')
+    # spectrogram
+    self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
+                                       xlabel='Time in seconds (s)',
+                                       ylabel='Frequency in hertz ('
+                                              'Hz)')
+  
+  
+  def plotSignal(self, signal=None):
+    # plot the signal
+    self.matplot_panel1 = self.matplot_panel1.plot(signal=signal)
+    # spectrum
+    self.matplot_panel2 = self.matplot_panel2.plotSpectrum(signal=signal)
+    # spectrogram
+    self.matplot_panel3 = self.matplot_panel3.plotSpectrogram(signal=signal)
+  
+  
+  def changeSignal(self, signal, f=440.0, l=10.0, amp=1.0, fs=44100, path=None):
+    if signal is None or path is None:
+      return
+    try:
+      signals_module = importlib.import_module('.signals', 'pythogram')
+      try:
+        if signal in ["Sine", "Square", "Sawtooth", "Triangle"]:
+          self.signal = getattr(signals_module, signal)(freq=f, l=l, amp=amp,
+                                                        srate=fs)
+        elif signal == "WNoise":
+          self.signal = getattr(signals_module, signal)(l=l, amp=amp, srate=fs)
+        
+        elif signal == "File" and path is not None:
+          self.signal = getattr(signals_module, signal)(path)
+      except AttributeError:
+        print("Class does not exist")
+    except ImportError:
+      print("Module does not exist")
     
-    # self.signal = Sine(freq=100.0, l=10.0, amp=1.0, srate=44100)
-    #
-    # signal = self.signal._signal
-    # pxx = abs(fft(signal))
-    # pxx = pxx[:(len(pxx)/2)]
-    # f = np.linspace(0.0, self.signal.sample_rate/2, len(pxx))
-    # pxx = pxx/max(pxx)
-    # pxx = 20*np.log10(1e-6+pxx)
-    #
-    # self.matplot_panel2.axes.clear()
-    # self.matplot_panel2.spectrum(x=f, y=pxx)
+    self.plotSignal(self.signal)
+    self.setInformation(self.signal)
+  
+  
+  def setInformation(self, signal):
+    if self.control_panel is not None:
+      self.control_panel.output_fs.SetValue(signal.sample_rate)
+      self.control_panel.output_len.SetValue(signal.length)

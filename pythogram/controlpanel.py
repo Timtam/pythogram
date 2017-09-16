@@ -1,8 +1,10 @@
+import os
+
 import wx
 from wx.lib.intctrl import IntCtrl
 from wx.lib.masked.numctrl import NumCtrl
 
-from signals import *
+from const import *
 
 ID_FILE_SIGNAL = wx.NewId()
 ID_SAWTOOTH_SIGNAL = wx.NewId()
@@ -16,6 +18,11 @@ ID_WNOISE_SIGNAL = wx.NewId()
 class ControlPanel(wx.Panel):
   def __init__(self, parent, size=(100, 100)):
     wx.Panel.__init__(self, parent=parent, size=size)
+    
+    self.dlg = wx.FileDialog(self, message="Choose a file",
+                             defaultDir=os.getcwd(), defaultFile="",
+                             wildcard=FILE_TYPES,
+                             style=wx.OPEN | wx.CHANGE_DIR | wx.FILE_MUST_EXIST)
     
     bandpass = self.buildBandpassBox()
     test_signals = self.buildTestSignalsBox()
@@ -67,17 +74,21 @@ class ControlPanel(wx.Panel):
     text_freq = wx.StaticText(testsignals_box, label="Freq. (Hz):")
     self.input_freq = IntCtrl(testsignals_box)
     self.input_freq.SetMaxLength(5)
+    self.input_freq.SetValue(440)
     text_len = wx.StaticText(testsignals_box, label="Len. (s):")
     self.input_len = NumCtrl(testsignals_box)
     self.input_len.SetLimitOnFieldChange(True)
     self.input_len.SetBounds(min=0.01, max=10.0)
+    self.input_len.SetValue(1.0)
     text_amp = wx.StaticText(testsignals_box, label="Amp.:")
     self.input_amp = NumCtrl(testsignals_box)
     self.input_amp.SetLimitOnFieldChange(True)
     self.input_amp.SetBounds(min=0.01, max=10.0)
+    self.input_amp.SetValue(1.0)
     text_fs = wx.StaticText(testsignals_box, label="Sample rate (Hz):")
     self.input_fs = IntCtrl(testsignals_box)
     self.input_fs.SetMaxLength(6)
+    self.input_fs.SetValue(44100)
     
     button_file = wx.Button(testsignals_box, id=ID_FILE_SIGNAL,
                             label="Open file")
@@ -161,18 +172,34 @@ class ControlPanel(wx.Panel):
   def onSignalButton(self, event):
     source = event.GetId()
     
+    file_path = ""
+    
     if source == ID_FILE_SIGNAL:
-      path = ''
-      signal = File(path)
+      if self.dlg.ShowModal() == wx.ID_OK:
+        file_path = self.dlg.GetPath()
+        self.GetTopLevelParent().SetStatusText(
+          "You chose following file: " + file_path)
+        signal = "File"
+      else:
+        file_path = None
+        signal = None
     elif source == ID_SAWTOOTH_SIGNAL:
-      signal = Sawtooth()
+      signal = "Sawtooth"
     elif source == ID_SINE_SIGNAL:
-      signal = Sine()
+      signal = "Sine"
     elif source == ID_SQUARE_SIGNAL:
-      signal = Square()
+      signal = "Square"
     elif source == ID_TRIANGLE_SIGNAL:
-      signal = Triangle()
+      signal = "Triangle"
     elif source == ID_WNOISE_SIGNAL:
-      signal = WNoise()
+      signal = "WNoise"
     else:
+      signal = None
       print("Missing ID for event object")
+    
+    self.GetParent().changeSignal(signal,
+                                  f=self.input_freq.GetValue(),
+                                  l=self.input_len.GetValue(),
+                                  amp=self.input_amp.GetValue(),
+                                  fs=self.input_fs.GetValue(),
+                                  path=file_path)
