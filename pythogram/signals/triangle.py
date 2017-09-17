@@ -16,6 +16,6 @@ class TriangleSignal(Signal):
   
   @property
   def _signal(self):
-    return self.amplitude * (sawtooth(2 * np.pi * self.frequency * np.linspace(
-      0, 1, self.sample_rate*self.length, endpoint=False), 0.5)).astype(
-      np.float32)
+    return self.amplitude * (sawtooth(2 * np.pi * np.arange(
+      self.sample_rate * self.length) * self.frequency / self.sample_rate,
+                                      0.5)).astype(np.float32)

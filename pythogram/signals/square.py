@@ -16,6 +16,7 @@ class SquareSignal(Signal):
   
   @property
   def _signal(self):
-    return self.amplitude * (square(2 * np.pi * self.frequency * np.linspace(
-      0, 1, self.sample_rate*self.length, endpoint=False))).astype(
+    return self.amplitude * (square(2 * np.pi * np.arange(
+      self.sample_rate * self.length) * self.frequency /
+                                    self.sample_rate)).astype(
       np.float32)
