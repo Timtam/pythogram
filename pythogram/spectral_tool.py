@@ -9,10 +9,10 @@ class SpectralTool:
   
   
   @staticmethod
-  def spectrum(signal, nfft=256):
+  def spectrum(signal):
     
     # calculate fft of whole signal and get real values
-    pxx = abs(fft(signal.signal, nfft))
+    pxx = abs(fft(signal.signal))
     # only use first half, because the second is just a mirrored first half (
     # nyquist)
     pxx = pxx[:(len(pxx) / 2)]
@@ -20,7 +20,7 @@ class SpectralTool:
     f = np.linspace(0.0, signal.sample_rate / 2, len(pxx))
     
     # normalize pxx and log scale
-    pxx /= (nfft / 2)
+    pxx /= len(pxx)
     pxx = 20 * np.log10(1e-6 + pxx)
     
     return f, pxx
@@ -36,7 +36,7 @@ class SpectralTool:
     # nfft elements
     split_sig = np.reshape(sig[:(num_fft * nfft)], (num_fft, nfft))
     # multiply with a window to reduce fft artifacts
-    split_sig *= np.hamming(nfft)
+    split_sig *= np.blackman(nfft)
     # calculate fft on 2d-signal-array
     tmp = abs(fft(split_sig, nfft))
     # create a new 2d-array with also num_fft element, but which only have

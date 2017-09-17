@@ -103,11 +103,11 @@ class MatplotPanel(wx.Panel):
     return self
   
   
-  def plotSpectrum(self, signal, nfft=256):
+  def plotSpectrum(self, signal):
     self.axes.clear()
     self.setProperties()
     # f: frequencies, pxx: peaks (amplitude)
-    f, pxx = SpectralTool().spectrum(signal, nfft)
+    f, pxx = SpectralTool().spectrum(signal)
     
     self.axes.plot(f, pxx, '-')
     self.axes.set_xscale('log')

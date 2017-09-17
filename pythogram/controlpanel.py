@@ -64,13 +64,13 @@ class ControlPanel(wx.Panel):
     button_apply_bandpass.Bind(wx.EVT_BUTTON, self.onApplyBandpass)
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
-    gridbag_sizer.Add(text_start_fq, pos=(1, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.input_start_fq, pos=(1, 3), flag=wx.EXPAND)
-    gridbag_sizer.Add(text_end_fq, pos=(2, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.input_end_fq, pos=(2, 3), flag=wx.EXPAND)
-    gridbag_sizer.Add(button_apply_bandpass, pos=(4, 3), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_start_fq, pos=(0, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_start_fq, pos=(0, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_end_fq, pos=(1, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_end_fq, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(button_apply_bandpass, pos=(3, 2), flag=wx.EXPAND)
     
-    # gridbag_sizer.AddGrowableCol(2)
+    gridbag_sizer.AddGrowableCol(1)
     # gridbag_sizer.AddGrowableRow(3)
     
     box_sizer = wx.StaticBoxSizer(bandpass_box, wx.VERTICAL)
@@ -94,13 +94,13 @@ class ControlPanel(wx.Panel):
     button_apply_time.Bind(wx.EVT_BUTTON, self.onApplyTime)
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
-    gridbag_sizer.Add(text_start_time, pos=(1, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.input_start_time, pos=(1, 3), flag=wx.EXPAND)
-    gridbag_sizer.Add(text_end_time, pos=(2, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.input_end_time, pos=(2, 3), flag=wx.EXPAND)
-    gridbag_sizer.Add(button_apply_time, pos=(4, 3), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_start_time, pos=(0, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_start_time, pos=(0, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_end_time, pos=(1, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.input_end_time, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(button_apply_time, pos=(3, 2), flag=wx.EXPAND)
     
-    # gridbag_sizer.AddGrowableCol(2)
+    gridbag_sizer.AddGrowableCol(1)
     # gridbag_sizer.AddGrowableRow(3)
     
     box_sizer = wx.StaticBoxSizer(time_box, wx.VERTICAL)
@@ -128,6 +128,11 @@ class ControlPanel(wx.Panel):
     self.input_fs = NumCtrl(testsignals_box, value=44100, integerWidth=6,
                             fractionWidth=0, allowNegative=False, min=1.0,
                             max=200000.0)
+    text_fft = wx.StaticText(testsignals_box, label="FFT size:")
+    self.input_fft = wx.ComboBox(testsignals_box, value='1024',
+                                 choices=['16', '32', '64', '128', '256', '512',
+                                          '1024', '2048', '4096', '8192',
+                                          '16384', '32768', '65536'])
     
     button_file = wx.Button(testsignals_box, id=ID_FILE_SIGNAL,
                             label="Open file")
@@ -149,26 +154,28 @@ class ControlPanel(wx.Panel):
     button_wnoise.Bind(wx.EVT_BUTTON, self.onSignalButton, button_wnoise)
     
     gridbag_sizer_top = wx.GridBagSizer(vgap=5, hgap=5)
-    gridbag_sizer_top.Add(text_freq, pos=(1, 1), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(self.input_freq, pos=(1, 3), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(text_fs, pos=(2, 1), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(self.input_fs, pos=(2, 3), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(text_len, pos=(3, 1), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(self.input_len, pos=(3, 3), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(text_amp, pos=(4, 1), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(self.input_amp, pos=(4, 3), flag=wx.EXPAND)
-    gridbag_sizer_top.AddGrowableCol(2)
+    gridbag_sizer_top.Add(text_freq, pos=(0, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_freq, pos=(0, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(text_fs, pos=(1, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_fs, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(text_len, pos=(2, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_len, pos=(2, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(text_amp, pos=(3, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_amp, pos=(3, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(text_fft, pos=(4, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_fft, pos=(4, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.AddGrowableCol(1)
     
     gridbag_sizer_bottom = wx.GridBagSizer(vgap=5, hgap=5)
-    gridbag_sizer_bottom.Add(button_sine, pos=(1, 1), flag=wx.EXPAND)
-    gridbag_sizer_bottom.Add(button_square, pos=(1, 2), flag=wx.EXPAND)
-    gridbag_sizer_bottom.Add(button_sawtooth, pos=(1, 3), flag=wx.EXPAND)
-    gridbag_sizer_bottom.Add(button_triangle, pos=(2, 1), flag=wx.EXPAND)
-    gridbag_sizer_bottom.Add(button_wnoise, pos=(2, 2), flag=wx.EXPAND)
-    gridbag_sizer_bottom.Add(button_file, pos=(2, 3), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_sine, pos=(0, 0), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_square, pos=(0, 1), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_sawtooth, pos=(0, 2), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_triangle, pos=(1, 0), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_wnoise, pos=(1, 1), flag=wx.EXPAND)
+    gridbag_sizer_bottom.Add(button_file, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer_bottom.AddGrowableCol(0)
     gridbag_sizer_bottom.AddGrowableCol(1)
     gridbag_sizer_bottom.AddGrowableCol(2)
-    gridbag_sizer_bottom.AddGrowableCol(3)
     
     box_sizer = wx.StaticBoxSizer(testsignals_box, wx.VERTICAL)
     box_sizer.Add(gridbag_sizer_top, proportion=1, flag=wx.EXPAND)
@@ -186,10 +193,10 @@ class ControlPanel(wx.Panel):
     self.output_len = wx.StaticText(output_box, label="0000")
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
-    gridbag_sizer.Add(text_fs, pos=(1, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.output_fs, pos=(1, 3), flag=wx.EXPAND)
-    gridbag_sizer.Add(text_len, pos=(2, 1), flag=wx.EXPAND)
-    gridbag_sizer.Add(self.output_len, pos=(2, 3), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_fs, pos=(0, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.output_fs, pos=(0, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(text_len, pos=(1, 0), flag=wx.EXPAND)
+    gridbag_sizer.Add(self.output_len, pos=(1, 2), flag=wx.EXPAND)
     
     # gridbag_sizer.AddGrowableCol(2)
     
@@ -206,7 +213,7 @@ class ControlPanel(wx.Panel):
     parent = self.GetParent()
     parent.signal.low_cutoff = self.input_start_fq.GetValue()
     parent.signal.high_cutoff = self.input_end_fq.GetValue()
-    parent.plotSignal(parent.signal)
+    parent.plotSignal(parent.signal, parent.nfft)
   
   
   def onApplyTime(self, event):
@@ -247,6 +254,7 @@ class ControlPanel(wx.Panel):
       signal = None
       print("Missing ID for event object")
     
+    self.GetParent().nfft = int(self.input_fft.GetValue())
     self.GetParent().changeSignal(signal,
                                   f=self.input_freq.GetValue(),
                                   l=self.input_len.GetValue(),

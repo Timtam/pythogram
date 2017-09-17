@@ -54,9 +54,9 @@ class Signal(object):
 
     else:
       signal = self._signal
-    
-    if np.max(np.abs(signal), axis=0) > 1.0:
-      signal /= np.max(np.abs(signal), axis=0)
+
+    # if np.max(np.abs(signal), axis=0) > 1.0:
+    #   signal /= np.max(np.abs(signal), axis=0)
     
     return signal
   

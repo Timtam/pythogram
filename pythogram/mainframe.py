@@ -120,14 +120,20 @@ class MainPanel(wx.Panel):
   
   
   def plotSignal(self, signal=None, nfft=256):
+    # a progress dialog when processing takes much time (i.e. songs)
+    dlg = wx.ProgressDialog(parent=self, message="Processing signal plot...",
+                            title="Processing info", maximum=3)
     # plot the signal
     self.matplot_panel1 = self.matplot_panel1.plot(signal=signal)
+    dlg.Update(1, "Processing spectrum...")
     # spectrum
-    self.matplot_panel2 = self.matplot_panel2.plotSpectrum(signal=signal,
-                                                           nfft=nfft)
+    self.matplot_panel2 = self.matplot_panel2.plotSpectrum(signal=signal)
+    dlg.Update(2, "Processing spectrogram...")
     # spectrogram
     self.matplot_panel3 = self.matplot_panel3.plotSpectrogram(signal=signal,
                                                               nfft=nfft)
+    dlg.Update(3, "Complete")
+    dlg.Destroy()
   
   
   def changeSignal(self, signal, f=440.0, l=1.0, amp=1.0, fs=44100, path=None):
@@ -149,7 +155,7 @@ class MainPanel(wx.Panel):
     except ImportError:
       print("Module does not exist")
     
-    self.plotSignal(self.signal)
+    self.plotSignal(self.signal, self.nfft)
     self.setInformation(self.signal)
   
   
