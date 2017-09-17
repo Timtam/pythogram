@@ -1,0 +1,143 @@
+%https://www.overleaf.com/9980828whgsqyqzhjkx#/36673404/
+
+\documentclass[a4paper]{article}
+
+%% Language and font encodings
+\usepackage[ngerman]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=4cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+%\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+
+\title{Belegarbeit Multimediale Signalverarbeitung\\Spektrumanalysator}
+\author{Toni Barth, Max Haarbach}
+
+\begin{document}
+\maketitle
+
+%\begin{abstract}
+%Your abstract
+%\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Einführung}
+
+\subsection{Aufgabenstellung}
+
+SA Spektrumanalysator (Oszilloskop): Applikation ermöglicht die Visualisierung und Analyse von Signalen im Frequenzbereich
+\begin{itemize}
+  \item Funktionaler Umfang
+  \begin{itemize}
+    \item ein Eingang, veränderbare Zeitbereich/ Frequenzbereich und Amplitude, Frequenzband des Signals über Bandbegrenzung einstellbar, Spektrum, Spektrogramm
+  \end{itemize}
+  \item Simulation der Darstellungsformen, Berechnungen und Filterfunktionen (Spektrogram ohne lib umsetzen, selber coden!)
+  \item Erzeugen verschiedener Testsignale (z.B. Rauschen, Sinus, Musikstück)
+  \item Darstellung und Vergleich (Zeit- und Frequenzbereich) sowie Veränderung Parameter/ Algorithmen/ Umsetzung, Einfluss der FFT-Auflösung (Spektralkomponenten)
+  \begin{itemize}
+    \item Signale im Zeit- und Frequenzbereich (Spektrogram und Spektrum)
+    \item FFT-Auflösung/ Signallänge/ Fensterung
+  \end{itemize}
+  \item Validierung korrekter Funktionsweise (stimmt angezeigte Frequenz?, kontinuierliche Darstellung, usw.)
+\end{itemize}
+
+\subsection{Ziel der Arbeit}
+
+Das Ziel der Arbeit ist es, die Funktionsweise der auditiven Signalverarbeitung nicht nur zu verstehen, sondern in ihren Grundzügen auch selber Anwenden zu können. Zu diesem Zweck sollen möglichst viele Funktionen des Programmes selbst implementiert werden. Hierbei wird sowohl der Aufbau eines Signals, aber auch das Zusammenführen dieser, das Analysieren und verändern (bspw. durch Resampling, Downmixing etc) vermittelt und angewendet. Das Ziel der Arbeit und des Programmes an sich ist es, ein Programm zur Verfügung zu stellen, welche die oben genannten Anforderungen umsetzt.
+
+\subsection{Anwendungsfälle}
+
+Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen zu lassen. Man kann hierbei untersuchen, welche Frequenzen in einem Audiosignal der Wahl (oder in generierten Testsignalen) besonders häufig vorhanden sind / besonders laut sind und so einen Eindruck über das Signal bekommen, ohne es sich anhören zu müssen. Außerdem kann man gezielt Frequenzen herausfiltern und sich das Ergebnis ohne diese Frequenzen visualisieren lassen. Zudem kann man sich Testsignale visualisieren lassen, um Erfahrung darüber zu gewinnen, wie typische Signale aussehen.
+
+\newpage
+\section{Anforderungsanalyse}
+
+\subsection{Projektintension}
+
+\subsection{Funktionale Anforderungen}
+
+\begin{itemize}
+  \item ein Eingang (Testsignal, Audiodatei)
+  \item veränderbarer Zeitbereich
+  \item veränderbarer Frequenzbereich
+  \item veränderbare Amplitude
+  \item einstellbare Bandbegrenzung des Eingangsignals
+  \item Spektrum (Frequenzbereich des Signals)
+  \item Spektrogramm (Frequenzbereich über Zeit hinweg)
+\end{itemize}
+
+\subsubsection{Abgrenzung des Produkts}
+\subsubsection{Funktionen des Produktes}
+
+\subsection{Nicht-funktionale Anforderungen}
+\subsubsection{Look and Feel}
+\subsubsection{Usability}
+\subsubsection{Barrierefreiheit}
+\subsubsection{Performance}
+\subsubsection{Skalierbarkeit/Erweiterbarkeit}
+\subsubsection{Übersicht aller Anforderungen}
+
+\newpage
+\section{Ähnliche Anwendungen}
+
+\subsection{Sonic Visualiser}
+
+\subsection{Spek}
+
+\newpage
+\section{Konzeption}
+
+\subsection{Gesamtüberblick}
+
+\subsection{Anwendung}
+
+\subsubsection{Benutzeroberfläche}
+\subsubsection{Eingabeparamter}
+
+Folgende Parameter können eingegeben werden:
+\begin{itemize}
+  \item Signal:
+  \begin{itemize}
+    \item Frequenz in Hz
+    \item Abtastfrequenz in Hz
+    \item Länge in s
+    \item Amplitude
+  \end{itemize}
+  \item FFT-Auflösung
+\end{itemize}
+\subsubsection{Darstellungsformen}
+
+Die Anwendung realisiert 3 verschiedene Darstellungen von dem eingegebenen oder ausgewählten Signal. Das Diagramm in der oberen rechten Ecke zeigt die Schwingungen bzw. Amplituden des Signals über den Zeitbereich. Hierbei wird es standardmäßig auf den Bereich von 0 bis 1 Sekunde eingeschränkt, was man aber durch die Eingabe der Zeitgrenzen oder durch "`Bewegen"' im Diagramm selbst festlegen kann. Die y-Achse skaliert sich automatisch je nach dem, welche maximale oder minimale Amplitude im Signal vorkommt.\\
+In der unteren rechten Ecke ist das Spektrum des gesamten Signals zu sehen. Dadurch sieht man, welche Frequenzen insgesamt im Signal vorkommen. Die Begrenzungen sind dabei auf der x-Achse die Frequenzen von 20 bis 24.000 Hz, wobei die Einteilung logarithmisch skaliert ist, und auf der y-Achse die Stärke der jeweiligen Frequenzen in dB relativ zur maximalen Amplitude (db FS) von -120 dB bis 0 dB. Das bedeutet, die am lautesten vorkommende Frequenz gibt den Bezugspunkt für alle anderen Frequenzen an, egal wie laut diese wirklich ist.\\
+Im unteren linken Diagramm ist dann das Spektrogramm des gesamten Signals darstellt. Auch hier ist die y-Achse der Frequenzen mit den Begrenzungen von 20 bis 24.000 Hz initialisiert, die auch logarithmisch skaliert sind. Auf der x-Achse befindet sich dann die Zeit, die der Länge des Signals entspricht, und die Stärke der Frequenzen wird durch Farben dargestellt, die wiederum in dB FS angegeben sind.\vspace{1em}\\
+In allen Diagrammen stehen zudem verschiedene Funktionen zu Verfügung.\\
+Man kann die Standardansicht wiederherstellen (Haus), zwischen den Ansichten vor oder zurück wechseln (Pfeile), die Kurven oder Bilder in den Diagrammen verschieben (4-Pfeil-Kreuz), in sie hinein (Lupe + linke Maustaste) oder aus ihnen heraus zoomen (Lupe + rechte Maustaste), einige minimale Einstellungen am Layout vornehmen und den aktuellen Diagramm-Ausschnitt als Bild speichern.
+
+\subsection{Testsignale}
+
+Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.
+
+\subsection{Zusammenfassung}
+
+\newpage
+\section{Umsetzung und Evaluation}
+
+\subsection{Ziele}
+
+\subsection{Umgesetzte Anforderungen}
+
+\subsection{Zusammenfassung}
+
+\newpage
+\section{Zusammenfassung und Ausblick}
+
+\end{document}
