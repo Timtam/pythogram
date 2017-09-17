@@ -89,11 +89,15 @@ class MatplotPanel(wx.Panel):
       self.axes.set_ylabel(self.ylabel)
   
   
+  def setXLimits(self, lim=(0, 1)):
+    self.xlim = lim
+  
+  
   def plot(self, signal):
     self.axes.clear()
     self.setProperties()
     t = np.arange(0.0, signal.length, (1.0 / signal.sample_rate))
-    self.axes.plot(t, signal._signal, '-')
+    self.axes.plot(t, signal.signal, '-')
     self.axes.grid(self.grid, ls='-')
     self.figure.canvas.draw()
     return self
@@ -120,12 +124,13 @@ class MatplotPanel(wx.Panel):
     self.setProperties()
     # f, t, sxx = SpectralTool().spectrogram(signal)
     
-    spec, f, t, im = self.axes.specgram(x=signal._signal, NFFT=1024,
+    spec, f, t, im = self.axes.specgram(x=signal.signal, NFFT=1024,
                                         Fs=signal.sample_rate, cmap='plasma')
     
     # self.axes.pcolormesh(t, f, sxx, cmap=mpl.cm.hot)
     # self.axes.set_yscale('symlog')
     # self.axes.imshow(x)
+    # self.axes.grid(self.grid, which='both', ls='-')
     if self.colorbar is None:
       self.colorbar = self.figure.colorbar(im)
       self.colorbar.set_label('Intensity [dB]')
