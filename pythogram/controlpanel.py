@@ -27,16 +27,15 @@ class ControlPanel(wx.Panel):
     time_options = self.buildTimeOptions()
     test_signals = self.buildTestSignalsBox()
     output = self.buildOutput()
-    
+
     left_vbox = wx.BoxSizer(wx.VERTICAL)
-    left_vbox.Add(bandpass, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
-    left_vbox.Add(time_options, proportion=0, flag=wx.EXPAND | wx.ALL,
-                  border=10)
-    
+    left_vbox.Add(test_signals, proportion=0, flag=wx.EXPAND)
+    left_vbox.Add(output, proportion=0, flag=wx.EXPAND)
+
     right_vbox = wx.BoxSizer(wx.VERTICAL)
-    right_vbox.Add(test_signals, proportion=0, flag=wx.EXPAND | wx.ALL,
-                   border=10)
-    right_vbox.Add(output, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
+    right_vbox.Add(bandpass, proportion=0, flag=wx.EXPAND)
+    right_vbox.AddStretchSpacer(1)
+    right_vbox.Add(time_options, proportion=0, flag=wx.EXPAND)
     
     hbox = wx.BoxSizer(wx.HORIZONTAL)
     hbox.Add(left_vbox, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
@@ -165,8 +164,8 @@ class ControlPanel(wx.Panel):
     gridbag_sizer_top.Add(self.input_len, pos=(2, 2), flag=wx.EXPAND)
     gridbag_sizer_top.Add(text_amp, pos=(3, 0), flag=wx.EXPAND)
     gridbag_sizer_top.Add(self.input_amp, pos=(3, 2), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(text_fft, pos=(4, 0), flag=wx.EXPAND)
-    gridbag_sizer_top.Add(self.input_fft, pos=(4, 2), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(text_fft, pos=(5, 0), flag=wx.EXPAND)
+    gridbag_sizer_top.Add(self.input_fft, pos=(5, 2), flag=wx.EXPAND)
     gridbag_sizer_top.AddGrowableCol(1)
     
     gridbag_sizer_bottom = wx.GridBagSizer(vgap=5, hgap=5)
