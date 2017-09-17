@@ -59,14 +59,17 @@ class ControlPanel(wx.Panel):
                                 max=25000)
     button_apply_bandpass = wx.Button(bandpass_box,
                                       label="Apply bandpass filter")
+    button_reset_bandpass = wx.Button(bandpass_box, label="Delete bandpass")
     
     button_apply_bandpass.Bind(wx.EVT_BUTTON, self.onApplyBandpass)
+    button_reset_bandpass.Bind(wx.EVT_BUTTON, self.onResetBandpass)
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
     gridbag_sizer.Add(text_start_fq, pos=(0, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(self.input_start_fq, pos=(0, 2), flag=wx.EXPAND)
     gridbag_sizer.Add(text_end_fq, pos=(1, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(self.input_end_fq, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(button_reset_bandpass, pos=(3, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(button_apply_bandpass, pos=(3, 2), flag=wx.EXPAND)
     
     gridbag_sizer.AddGrowableCol(1)
@@ -217,6 +220,13 @@ class ControlPanel(wx.Panel):
     parent.signal.high_cutoff = self.input_end_fq.GetValue()
     parent.plotSignal(parent.signal, parent.nfft)
   
+  
+  def onResetBandpass(self, event):
+    parent = self.GetParent()
+    parent.signal._low_cutoff = None
+    parent.signal._high_cutoff = None
+    parent.plotSignal(parent.signal, parent.nfft)
+    
   
   def onApplyTime(self, event):
     dlg = wx.ProgressDialog(parent=self, message="Processing...",
