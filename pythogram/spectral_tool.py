@@ -20,7 +20,7 @@ class SpectralTool:
     f = np.linspace(0.0, signal.sample_rate / 2, len(pxx))
     
     # normalize pxx and log scale
-    pxx /= len(pxx)
+    pxx /= max(pxx)
     pxx = 20 * np.log10(1e-6 + pxx)
     
     return f, pxx
