@@ -5,7 +5,7 @@ from ..signal import Signal
 
 
 class SineSignal(Signal):
-  def __init__(self, freq=440.0, l=10.0, amp=1.0, srate=44100):
+  def __init__(self, freq=440.0, l=2.0, amp=1.0, srate=44100):
     Signal.__init__(self)
     self.sample_rate = srate
     self.length = l

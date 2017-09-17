@@ -29,12 +29,12 @@ class ControlPanel(wx.Panel):
     output = self.buildOutput()
     
     left_vbox = wx.BoxSizer(wx.VERTICAL)
-    left_vbox.Add(bandpass, proportion=1, flag=wx.EXPAND | wx.ALL, border=10)
+    left_vbox.Add(bandpass, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
     left_vbox.Add(time_options, proportion=0, flag=wx.EXPAND | wx.ALL,
                   border=10)
     
     right_vbox = wx.BoxSizer(wx.VERTICAL)
-    right_vbox.Add(test_signals, proportion=1, flag=wx.EXPAND | wx.ALL,
+    right_vbox.Add(test_signals, proportion=0, flag=wx.EXPAND | wx.ALL,
                    border=10)
     right_vbox.Add(output, proportion=0, flag=wx.EXPAND | wx.ALL, border=10)
     
@@ -182,7 +182,7 @@ class ControlPanel(wx.Panel):
     
     box_sizer = wx.StaticBoxSizer(testsignals_box, wx.VERTICAL)
     box_sizer.Add(gridbag_sizer_top, proportion=1, flag=wx.EXPAND)
-    # box_sizer.AddStretchSpacer(1)
+    box_sizer.AddSpacer(5)
     box_sizer.Add(gridbag_sizer_bottom, proportion=0, flag=wx.EXPAND)
     
     return box_sizer
