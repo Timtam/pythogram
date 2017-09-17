@@ -84,27 +84,34 @@ Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen z
 %\subsubsection{Barrierefreiheit}
 \subsubsection{Performance}
 
-Das Entprodukt soll in der Leistung um ein Vielfaches schneller als Echtzeit sein, d.h. die Analyse eines 3-minütigen Audiosignals soll möglichst nur wenige Sekunden dauern. Das selbe gilt auch für die Anwendung von Filtern oder das Verändern von Analyse-Parametern. Zudem soll die Verwendung der Bedienoberfläche flüssig ablaufen, es sollten also keine Aussetzer oder Hänger aufgrund zu hoher Hintergrundaktivität auftreten.
+Das Endprodukt soll in der Leistung um ein Vielfaches schneller als Echtzeit sein, d.h. die Analyse eines 3-minütigen Audiosignals soll möglichst nur wenige Sekunden dauern. Das selbe gilt auch für die Anwendung von Filtern oder das Verändern von Analyse-Parametern. Zudem soll die Verwendung der Bedienoberfläche flüssig ablaufen, es sollten also keine Aussetzer oder Hänger aufgrund zu hoher Hintergrundaktivität auftreten.
 
 %\subsubsection{Skalierbarkeit/Erweiterbarkeit}
 %\subsubsection{Übersicht aller Anforderungen}
 
 \newpage
-
 \section{Ähnliche Anwendungen}
 
 \subsection{Sonic Visualiser}
+"`Sonic Visualiser"' ist eine kostenlose Software, mit der viele verschiedene Darstellungen von Audiosignalen möglich sind.
+So können Audiodateien der Formate WAV, Ogg und MP3 geladen werden, deren Schwingungsverlauf im Zeitbereich dann betrachtet werden kann. Zudem kann aber auch das Spektrum, Spektrogramm und weitere Diagramme dargestellt werden, die durch verschiedene Parameter beeinflusst und verändert werden können. Diese wiederum können unterschiedlich angeordnet und auch überlagert werden, um so Zusammenhänge zwischen ihnen besser zu erkennen.\\
+Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wiederzugeben während sich ein Cursor entsprechend über die Diagramme bewegt.\\
+
+[Bilder]
 
 \subsection{Spek}
 
 \newpage
 \section{Konzeption}
 
-\subsection{Gesamtüberblick}
-
 \subsection{Anwendung}
 
 \subsubsection{Benutzeroberfläche}
+
+Die Oberfläche hat im Moment noch nicht viel zu bieten. Es ist ein minimalistisches Panel vorhanden, auf dem der Nutzer verschiedene Parameter und Einstellungen eingeben kann sowie verschiedene Testsignale auswählen kann und zudem die Länge und Abtastrate der Signale ausgegeben wird, die bei eigenen ausgewählten Dateien nützliche Informationen darstellen.\\
+
+[Bilder]
+
 \subsubsection{Eingabeparameter}
 
 Folgende Parameter können eingegeben werden:
@@ -116,8 +123,24 @@ Folgende Parameter können eingegeben werden:
     \item Länge in s
     \item Amplitude
   \end{itemize}
+  \item Eingabesignale:
+  \begin{itemize}
+    \item Sinus
+    \item Rechteck
+    \item Sägezahn
+    \item Dreieck
+    \item Weißes Rauschen
+    \item Eigene auszuwählende WAVE-Datei
+  \end{itemize}
   \item FFT-Auflösung
+  \item Bandpass-Filter:
+  \begin{itemize}
+    \item untere Cutoff-Frequenz
+    \item obere Cutoff-Frequenz
+  \end{itemize}
+  \item anzuzeigende Zeitgrenzen (Start und Ende)
 \end{itemize}
+
 \subsubsection{Darstellungsformen}
 
 Die Anwendung realisiert 3 verschiedene Darstellungen von dem eingegebenen oder ausgewählten Signal. Das Diagramm in der oberen rechten Ecke zeigt die Schwingungen bzw. Amplituden des Signals über den Zeitbereich. Hierbei wird es standardmäßig auf den Bereich von 0 bis 1 Sekunde eingeschränkt, was man aber durch die Eingabe der Zeitgrenzen oder durch "`Bewegen"' im Diagramm selbst festlegen kann. Die y-Achse skaliert sich automatisch je nach dem, welche maximale oder minimale Amplitude im Signal vorkommt.\\
@@ -128,7 +151,9 @@ Man kann die Standardansicht wiederherstellen (Haus), zwischen den Ansichten vor
 
 \subsection{Testsignale}
 
-Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.
+Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.\\
+
+[Bilder?]
 
 \subsection{Zusammenfassung}
 
