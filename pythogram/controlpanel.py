@@ -90,14 +90,17 @@ class ControlPanel(wx.Panel):
                                   fractionWidth=2, allowNegative=False,
                                   min=0.01)
     button_apply_time = wx.Button(time_box, label="Apply time limits")
+    button_reset_time =wx.Button(time_box, label="Reset time limits")
     
     button_apply_time.Bind(wx.EVT_BUTTON, self.onApplyTime)
+    button_reset_time.Bind(wx.EVT_BUTTON, self.onResetTime)
     
     gridbag_sizer = wx.GridBagSizer(vgap=5, hgap=5)
     gridbag_sizer.Add(text_start_time, pos=(0, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(self.input_start_time, pos=(0, 2), flag=wx.EXPAND)
     gridbag_sizer.Add(text_end_time, pos=(1, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(self.input_end_time, pos=(1, 2), flag=wx.EXPAND)
+    gridbag_sizer.Add(button_reset_time, pos=(3, 0), flag=wx.EXPAND)
     gridbag_sizer.Add(button_apply_time, pos=(3, 2), flag=wx.EXPAND)
     
     gridbag_sizer.AddGrowableCol(1)
@@ -217,6 +220,8 @@ class ControlPanel(wx.Panel):
   
   
   def onApplyTime(self, event):
+    dlg = wx.ProgressDialog(parent=self, message="Processing...",
+                            title="Processing info", maximum=1)
     parent = self.GetParent()
     parent.matplot_panel1.setXLimits(
       (self.input_start_time.GetValue(), self.input_end_time.GetValue()))
@@ -224,6 +229,20 @@ class ControlPanel(wx.Panel):
     parent.matplot_panel3.setXLimits(
       (self.input_start_time.GetValue(), self.input_end_time.GetValue()))
     parent.matplot_panel3.plotSpectrogram(parent.signal, parent.nfft)
+    dlg.Update(1, "Complete")
+    dlg.Destroy()
+  
+  
+  def onResetTime(self, event):
+    dlg = wx.ProgressDialog(parent=self, message="Processing...",
+                            title="Processing info", maximum=1)
+    parent = self.GetParent()
+    parent.matplot_panel1.setXLimits((0.0, 1.0))
+    parent.matplot_panel1.plot(parent.signal)
+    parent.matplot_panel3.resetXLimits()
+    parent.matplot_panel3.plotSpectrogram(parent.signal, parent.nfft)
+    dlg.Update(1, "Complete")
+    dlg.Destroy()
   
   
   def onSignalButton(self, event):

@@ -8,7 +8,7 @@ import wx
 from matplotlib.backends.backend_wxagg import (
   FigureCanvasWxAgg as FigureCanvas,
   NavigationToolbar2WxAgg as NavigationToolbar)
-from matplotlib.colors import LinearSegmentedColormap
+# from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.figure import Figure
 from spectral_tool import SpectralTool
 
@@ -19,32 +19,14 @@ class MatplotPanel(wx.Panel):
                ylim=None, title='', xlabel='', ylabel=''):
     wx.Panel.__init__(self, parent, size=size, style=style)
     
-    # figure
+    # figure and subplot
     self.figure = Figure(tight_layout=True)
     self.axes = self.figure.add_subplot(111)
     # just a recommended style
     plt.style.use('ggplot')
+    # when processing big arrays, it crashed sometimes...
+    # this should prevent crashes when trying to show big data on diagrams
     mpl.rcParams['agg.path.chunksize'] = 10000
-    plt.ion()
-    
-    # our custom color map for spectrogram
-    self.cmap = LinearSegmentedColormap(name='Custom',
-                                        segmentdata={'red'  : [(0.0, 0.0, 0.0),
-                                                               (0.7, 1.0, 1.0),
-                                                               (1.0, 1.0, 1.0)],
-    
-                                                     'green': [(0.0, 0.0, 0.0),
-                                                               (0.7, 0.0, 0.0),
-                                                               (1.0, 1.0, 1.0)],
-    
-                                                     'blue' : [(0.0, 0.0, 0.0),
-                                                               (0.7, 0.0, 0.0),
-                                                               (1.0, 1.0, 1.0)],
-    
-                                                     'alpha': [(0.0, 0.0, 0.0),
-                                                               (0.5, 0.0, 1.0),
-                                                               (1.0, 1.0, 1.0)]
-                                                     })
     
     self.grid = grid
     self.xlim = xlim
@@ -91,6 +73,10 @@ class MatplotPanel(wx.Panel):
   
   def setXLimits(self, lim=(0, 1)):
     self.xlim = lim
+  
+  
+  def resetXLimits(self):
+    self.xlim = None
   
   
   def plot(self, signal):
