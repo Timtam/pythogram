@@ -50,8 +50,8 @@ class MainFrame(wx.Frame):
     
     self.status_bar = self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.SetStatusText("Initialized")
-    
-    
+  
+  
   # def onOpenFile(self, event):
   #   if self.dlg.ShowModal() == wx.ID_OK:
   #     self.file_path = self.dlg.GetPath()
@@ -69,16 +69,12 @@ class MainPanel(wx.Panel):
     wx.Panel.__init__(self, parent=parent, style=wx.BORDER_SUNKEN)
     self.SetBackgroundColour("white")
     
-    self.init = True
-    
-    # control panel for user interaction
+    # control panel for user input/output
     self.control_panel = ControlPanel(self)
-    
-    self.file_path = u'E:\\GitHub\\pythogram\\[HQ] Toms Diner --- Susanne ' \
-                     u'Vega.wav'
     
     # create sine signal
     self.signal = Sine()
+    self.nfft = 256
     
     self.createMatplotPanels()
     
@@ -117,22 +113,24 @@ class MainPanel(wx.Panel):
                                               'relative\n to full scale (db '
                                               'FS)')
     # spectrogram
-    self.matplot_panel3 = MatplotPanel(parent=self, title='Spectrogram',
+    self.matplot_panel3 = MatplotPanel(parent=self, ylim=(20, 24000),
+                                       title='Spectrogram',
                                        xlabel='Time in seconds (s)',
-                                       ylabel='Frequency in hertz ('
-                                              'Hz)')
+                                       ylabel='Frequency in hertz (Hz)')
   
   
-  def plotSignal(self, signal=None):
+  def plotSignal(self, signal=None, nfft=256):
     # plot the signal
     self.matplot_panel1 = self.matplot_panel1.plot(signal=signal)
     # spectrum
-    self.matplot_panel2 = self.matplot_panel2.plotSpectrum(signal=signal)
+    self.matplot_panel2 = self.matplot_panel2.plotSpectrum(signal=signal,
+                                                           nfft=nfft)
     # spectrogram
-    self.matplot_panel3 = self.matplot_panel3.plotSpectrogram(signal=signal)
+    self.matplot_panel3 = self.matplot_panel3.plotSpectrogram(signal=signal,
+                                                              nfft=nfft)
   
   
-  def changeSignal(self, signal, f=440.0, l=10.0, amp=1.0, fs=44100, path=None):
+  def changeSignal(self, signal, f=440.0, l=1.0, amp=1.0, fs=44100, path=None):
     if signal is None or path is None:
       return
     try:

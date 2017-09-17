@@ -46,7 +46,7 @@ class ControlPanel(wx.Panel):
     
     self.Fit()
     self.SetMinSize(self.GetSize())
-    
+  
   
   def buildBandpassBox(self):
     bandpass_box = wx.StaticBox(self, label="Bandpass filter")
@@ -214,6 +214,9 @@ class ControlPanel(wx.Panel):
     parent.matplot_panel1.setXLimits(
       (self.input_start_time.GetValue(), self.input_end_time.GetValue()))
     parent.matplot_panel1.plot(parent.signal)
+    parent.matplot_panel3.setXLimits(
+      (self.input_start_time.GetValue(), self.input_end_time.GetValue()))
+    parent.matplot_panel3.plotSpectrogram(parent.signal, parent.nfft)
   
   
   def onSignalButton(self, event):

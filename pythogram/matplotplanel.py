@@ -103,11 +103,11 @@ class MatplotPanel(wx.Panel):
     return self
   
   
-  def plotSpectrum(self, signal):
+  def plotSpectrum(self, signal, nfft=256):
     self.axes.clear()
     self.setProperties()
     # f: frequencies, pxx: peaks (amplitude)
-    f, pxx = SpectralTool().spectrum(signal)
+    f, pxx = SpectralTool().spectrum(signal, nfft)
     
     self.axes.plot(f, pxx, '-')
     self.axes.set_xscale('log')
@@ -119,20 +119,23 @@ class MatplotPanel(wx.Panel):
     return self
   
   
-  def plotSpectrogram(self, signal):
+  def plotSpectrogram(self, signal, nfft=256):
     self.axes.clear()
     self.setProperties()
-    # f, t, sxx = SpectralTool().spectrogram(signal)
+    f, t, pxx = SpectralTool().spectrogram(signal, nfft)
     
-    spec, f, t, im = self.axes.specgram(x=signal.signal, NFFT=1024,
-                                        Fs=signal.sample_rate, cmap='plasma')
+    # display calculated values
+    im = self.axes.pcolormesh(t, f, pxx, cmap=mpl.cm.hot)
     
-    # self.axes.pcolormesh(t, f, sxx, cmap=mpl.cm.hot)
-    # self.axes.set_yscale('symlog')
-    # self.axes.imshow(x)
-    # self.axes.grid(self.grid, which='both', ls='-')
+    self.axes.set_yscale('log')
+    self.axes.set_yticks([20, 100, 200, 1000, 2000, 10000, 20000])
+    self.axes.grid(self.grid, which='both', ls='-')
+    self.axes.get_yaxis().set_major_formatter(ticker.ScalarFormatter())
+    # create a colorbar or change mappable
     if self.colorbar is None:
       self.colorbar = self.figure.colorbar(im)
       self.colorbar.set_label('Intensity [dB]')
+    else:
+      self.colorbar.on_mappable_changed(im)
     self.figure.canvas.draw()
     return self
