@@ -42,14 +42,14 @@ class MainFrame(wx.Frame):
                              defaultDir=os.getcwd(), defaultFile="",
                              wildcard=FILE_TYPES,
                              style=wx.OPEN | wx.CHANGE_DIR | wx.FILE_MUST_EXIST)
-    
+
+    self.status_bar = self.CreateStatusBar(style=wx.BORDER_SUNKEN)
     self.main_panel = MainPanel(parent=self)
     self.main_box = wx.BoxSizer()
     self.main_box.Add(item=self.main_panel, proportion=1, flag=wx.EXPAND)
     self.SetSizer(self.main_box)
     
-    self.status_bar = self.CreateStatusBar(style=wx.BORDER_SUNKEN)
-    self.SetStatusText("Initialized")
+    self.status_bar.SetStatusText("Initialized")
   
   
   # def onOpenFile(self, event):
@@ -101,7 +101,7 @@ class MainPanel(wx.Panel):
     # plot the signal
     self.matplot_panel1 = MatplotPanel(parent=self, xlim=(0.0, 1.0),
                                        # ylim=(-1.0, 1.0),
-                                       title='Signal',
+                                       title='Waveform',
                                        xlabel='Time in seconds (s)',
                                        ylabel='Amplitude')
     # spectrum
@@ -161,8 +161,7 @@ class MainPanel(wx.Panel):
         print("Class does not exist")
     except ImportError:
       print("Module does not exist")
-    
-    self.GetTopLevelParent().SetStatusText(
+    self.GetTopLevelParent().status_bar.SetStatusText(
       "You have chosen the following signal: " + signal_str)
     self.plotSignal(self.signal, self.nfft)
     self.setInformation(self.signal)

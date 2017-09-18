@@ -18,6 +18,7 @@ class ControlPanel(wx.Panel):
   def __init__(self, parent, size=(100, 100)):
     wx.Panel.__init__(self, parent=parent, size=size)
     
+    self.signal_status_text = None
     self.dlg = wx.FileDialog(self, message="Choose a file",
                              defaultDir=os.getcwd(), defaultFile="",
                              wildcard=FILE_TYPES,
@@ -218,6 +219,13 @@ class ControlPanel(wx.Panel):
     parent = self.GetParent()
     parent.signal.low_cutoff = self.input_start_fq.GetValue()
     parent.signal.high_cutoff = self.input_end_fq.GetValue()
+    if self.signal_status_text is None:
+      self.signal_status_text = self.GetTopLevelParent().status_bar.GetStatusText()
+    self.GetTopLevelParent().status_bar.SetStatusText(
+      self.signal_status_text +
+      " - Bandpass: Low: " + str(parent.signal.low_cutoff) + " Hz, "
+                                                             "High: " + str(
+        parent.signal.high_cutoff) + " Hz")
     parent.plotSignal(parent.signal, parent.nfft)
   
   
@@ -225,6 +233,11 @@ class ControlPanel(wx.Panel):
     parent = self.GetParent()
     parent.signal._low_cutoff = None
     parent.signal._high_cutoff = None
+    if self.signal_status_text is None:
+      self.signal_status_text = self.GetTopLevelParent().status_bar.GetStatusText()
+    self.GetTopLevelParent().status_bar.SetStatusText(
+      self.signal_status_text +
+      " - Bandpass: None")
     parent.plotSignal(parent.signal, parent.nfft)
   
   
@@ -260,8 +273,8 @@ class ControlPanel(wx.Panel):
     file_path = ""
     
     if source == ID_FILE_SIGNAL:
-      if self.dlg.ShowModal() == wx.ID_OK:
-        file_path = self.dlg.GetPath()
+      if self.GetTopLevelParent().dlg.ShowModal() == wx.ID_OK:
+        file_path = self.GetTopLevelParent().dlg.GetPath()
         signal = "File"
       else:
         file_path = None
@@ -280,6 +293,7 @@ class ControlPanel(wx.Panel):
       signal = None
       print("Missing ID for event object")
     
+    self.signal_status_text = None
     self.GetParent().nfft = int(self.input_fft.GetValue())
     self.GetParent().changeSignal(signal,
                                   f=self.input_freq.GetValue(),
