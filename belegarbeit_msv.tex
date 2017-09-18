@@ -140,7 +140,7 @@ Beim Spektrum kann man wiederum die Farbe einstellen und in welcher Skalierung d
     \end{minipage}
 \end{figure}
 \noindent
-Auch bei Spektrogramm kann die Farbe gewählt und ähnliche Parameter wie bei Spektrum eingestellt werden, da ein Spektrogramm im Endeffekt eine Zusammensetzung von mehreren kleinen Spektren ist. Daher kann hier auch die Skalierung der Amplitude und der Frequenzachse sowie die FFT-Auflösung verändert werden.
+Auch beim Spektrogramm kann die Farbe gewählt und ähnliche Parameter wie bei Spektrum eingestellt werden, da ein Spektrogramm im Endeffekt eine Zusammensetzung von mehreren kleinen Spektren ist. Daher kann hier auch die Skalierung der Amplitude und der Frequenzachse sowie die FFT-Auflösung verändert werden.
 \vspace{2em}
 \begin{figure}[H]
     \centering
@@ -151,6 +151,9 @@ Auch bei Spektrogramm kann die Farbe gewählt und ähnliche Parameter wie bei Sp
     \end{minipage}
 \end{figure}
 \noindent
+Hier sieht man die vorigen Diagramme alle überlagert. Man kann diese aber auch in mehreren separaten Bereichen anordnen können, z. B. Wellenform und Spektrum überlagert in der oberen Hälfte und das Spektrogramm in der unteren.
+\vspace{2em}\\
+Die nächsten beiden Abbildungen zeigen das Spektrogramm des Lieds "`Toms Diner"' von Susanne Vega; ein mal über dem gesamten Zeitraum und danach ca. die ersten 40 Sekunden.
 \begin{figure}[H]
     \centering
     \begin{minipage}{1.0\textwidth}
@@ -195,36 +198,18 @@ Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was fü
 
 \subsubsection{Benutzeroberfläche}
 
-Die Oberfläche hat im Moment noch nicht viel zu bieten. Es ist ein minimalistisches Panel vorhanden, auf dem der Nutzer verschiedene Parameter und Einstellungen eingeben kann sowie verschiedene Testsignale auswählen kann und zudem die Länge und Abtastrate der Signale ausgegeben wird, die bei eigenen ausgewählten Dateien nützliche Informationen darstellen.
-\vspace{2em}
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{1.0\textwidth}
-        \centering
-        \includegraphics[width=1.0\textwidth]{GUI.png}
-        \caption{Benutzeroberfläche von "`Pythogram"'}
-    \end{minipage}
-\end{figure}
+Ein konkretes Konzept für eine Benutzeroberfläche liegt nicht vor, da es zum Teil Bestandteil der Aufgabe und eine kleine Herausforderung für sich ist, Diagramme ordentlich darstellen zu können. Im Allgemeinen ist aber zu sagen, dass die Oberfläche übersichtlich und nicht zu überladen erscheinen soll. Die Funktionen in den Anforderungen lassen sich möglicherweise gut auf einen einzelnen Screen platzieren. Sofern noch weiterreichende Funktionen implementiert werden, gilt es zu überlegen, wie diese eingebettet werden.
 
 \subsubsection{Eingabeparameter}
 
-Folgende Parameter können eingegeben werden:
+Folgende Parameter sollen eingegeben werden können:
 \begin{itemize}
-  \item Signal:
+  \item Signalerzeugung:
   \begin{itemize}
     \item Frequenz in Hz
     \item Abtastfrequenz in Hz
     \item Länge in s
     \item Amplitude
-  \end{itemize}
-  \item Eingabesignale:
-  \begin{itemize}
-    \item Sinus
-    \item Rechteck
-    \item Sägezahn
-    \item Dreieck
-    \item Weißes Rauschen
-    \item Eigene auszuwählende WAVE-Datei
   \end{itemize}
   \item FFT-Auflösung
   \item Bandpass-Filter:
@@ -232,22 +217,14 @@ Folgende Parameter können eingegeben werden:
     \item untere Cutoff-Frequenz
     \item obere Cutoff-Frequenz
   \end{itemize}
-  \item anzuzeigende Zeitgrenzen (Start und Ende)
+  \item anzuzeigender Zeitbereich (Start und Ende)
 \end{itemize}
 
 \subsubsection{Darstellungsformen}
 
-Die Anwendung realisiert 3 verschiedene Darstellungen von dem eingegebenen oder ausgewählten Signal. Das Diagramm in der oberen rechten Ecke zeigt die Schwingungen bzw. Amplituden des Signals über den Zeitbereich. Hierbei wird es standardmäßig auf den Bereich von 0 bis 1 Sekunde eingeschränkt, was man aber durch die Eingabe der Zeitgrenzen oder durch "`Bewegen"' im Diagramm selbst festlegen kann. Die y-Achse skaliert sich automatisch je nach dem, welche maximale oder minimale Amplitude im Signal vorkommt.\\
-In der unteren rechten Ecke ist das Spektrum des gesamten Signals zu sehen. Dadurch sieht man, welche Frequenzen insgesamt im Signal vorkommen. Die Begrenzungen sind dabei auf der x-Achse die Frequenzen von 20 bis 24.000 Hz, wobei die Einteilung logarithmisch skaliert ist, und auf der y-Achse die Stärke der jeweiligen Frequenzen in dB relativ zur maximalen Amplitude (db FS) von -120 dB bis 0 dB. Das bedeutet, die am lautesten vorkommende Frequenz gibt den Bezugspunkt für alle anderen Frequenzen an, egal wie laut diese wirklich ist.\\
-Im unteren linken Diagramm ist dann das Spektrogramm des gesamten Signals darstellt. Auch hier ist die y-Achse der Frequenzen mit den Begrenzungen von 20 bis 24.000 Hz initialisiert, die auch logarithmisch skaliert sind. Auf der x-Achse befindet sich dann die Zeit, die der Länge des Signals entspricht, und die Stärke der Frequenzen wird durch Farben dargestellt, die wiederum in dB FS angegeben sind.\vspace{1em}\\
-In allen Diagrammen stehen zudem verschiedene Funktionen zu Verfügung.\\
-Man kann die Standardansicht wiederherstellen (Haus), zwischen den Ansichten vor oder zurück wechseln (Pfeile), die Kurven oder Bilder in den Diagrammen verschieben (4-Pfeil-Kreuz), in sie hinein (Lupe + linke Maustaste) oder aus ihnen heraus zoomen (Lupe + rechte Maustaste), einige minimale Einstellungen am Layout vornehmen und den aktuellen Diagramm-Ausschnitt als Bild speichern.
-
 \subsection{Testsignale}
 
-Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.\vspace{2em}
-\noindent
-[Bilder?]
+Dem Nutzer soll es möglich sein, verschiedene Testsignale zu generieren und die entsprechenden Diagramme dazu betrachten zu können. Als Testsignale kommen Sinus-, Rechteck-, Sägezahn- und Dreieck-Signal in Betracht sowie ein weißes Rauschen. Zusätzlich soll die Möglichkeit bestehen, ein eigenes Audiosignal einlesen zu können, wobei es zunächst ausreicht, sich auf WAVE-Dateien zu beschränken.
 
 \subsection{Zusammenfassung}
 
@@ -259,6 +236,33 @@ Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur
 Das Ziel des Projektes war es, diverse Techniken der Signalverarbeitung grundlegend kennenzulernen, oder bereits bestehendes Wissen zu vertiefen, und dieses Wissen mit konventionellen Werkzeugen in der Skriptsprache Python anzuwenden, wobei auch ein funktionales und ansprechendes Design eines Fensters umgesetzt werden musste. Zudem sollten natürlich möglichst viele der Grundanforderungen erfüllt werden. Als Werkzeuge zur Entwicklung sollten Python 2.7, die IDE PyCharm, aber auch die mathematischen Grundpakete SciPy und NumPy dienen. Zur Fensterdarstellung sollte wxPython verwendet werden, wobei MatPlotLib unterstützend für die Darstellung des Spektrums und Spektrogrammes eingesetzt werden soll. Zur Verwaltung des Quellcodes sollte das Versionsverwaltungssystem Git in Kombination mit der Online-Plattform GitHub eingesetzt werden.
 
 \subsection{Umgesetzte Anforderungen}
+
+\subsubsection{Benutzeroberfläche}
+
+Die Oberfläche hat im Moment noch nicht viel zu bieten. Es ist ein minimalistisches Panel vorhanden, auf dem der Nutzer verschiedene Parameter und Einstellungen eingeben kann sowie verschiedene Testsignale auswählen kann und zudem die Länge und Abtastrate der Signale ausgegeben wird, die bei eigenen ausgewählten Dateien nützliche Informationen darstellen.
+\vspace{2em}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{GUI.png}
+        \caption{Benutzeroberfläche von "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+
+\subsubsection{Darstellungen}
+
+Die Anwendung realisiert 3 verschiedene Darstellungen von dem eingegebenen oder ausgewählten Signal. Das Diagramm in der oberen rechten Ecke zeigt die Schwingungen bzw. Amplituden des Signals über den Zeitbereich. Hierbei wird es standardmäßig auf den Bereich von 0 bis 1 Sekunde eingeschränkt, was man aber durch die Eingabe der Zeitgrenzen oder durch "`Bewegen"' im Diagramm selbst festlegen kann. Die y-Achse skaliert sich automatisch je nach dem, welche maximale oder minimale Amplitude im Signal vorkommt.\\
+In der unteren rechten Ecke ist das Spektrum des gesamten Signals zu sehen. Dadurch sieht man, welche Frequenzen insgesamt im Signal vorkommen. Die Begrenzungen sind dabei auf der x-Achse die Frequenzen von 20 bis 24.000 Hz, wobei die Einteilung logarithmisch skaliert ist, und auf der y-Achse die Stärke der jeweiligen Frequenzen in dB relativ zur maximalen Amplitude (db FS) von -120 dB bis 0 dB. Das bedeutet, die am lautesten vorkommende Frequenz gibt den Bezugspunkt für alle anderen Frequenzen an, egal wie laut diese wirklich ist.\\
+Im unteren linken Diagramm ist dann das Spektrogramm des gesamten Signals darstellt. Auch hier ist die y-Achse der Frequenzen mit den Begrenzungen von 20 bis 24.000 Hz initialisiert, die auch logarithmisch skaliert sind. Auf der x-Achse befindet sich dann die Zeit, die der Länge des Signals entspricht, und die Stärke der Frequenzen wird durch Farben dargestellt, die wiederum in dB FS angegeben sind.\vspace{1em}\\
+In allen Diagrammen stehen zudem verschiedene Funktionen zu Verfügung.\\
+Man kann die Standardansicht wiederherstellen (Haus), zwischen den Ansichten vor oder zurück wechseln (Pfeile), die Kurven oder Bilder in den Diagrammen verschieben (4-Pfeil-Kreuz), in sie hinein (Lupe + linke Maustaste) oder aus ihnen heraus zoomen (Lupe + rechte Maustaste), einige minimale Einstellungen am Layout vornehmen und den aktuellen Diagramm-Ausschnitt als Bild speichern.
+
+\subsubsection{Testsignale}
+
+Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.\vspace{2em}
+\noindent
+[Bilder?]
 
 \subsection{Zusammenfassung}
 
