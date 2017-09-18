@@ -27,11 +27,11 @@ class ControlPanel(wx.Panel):
     time_options = self.buildTimeOptions()
     test_signals = self.buildTestSignalsBox()
     output = self.buildOutput()
-
+    
     left_vbox = wx.BoxSizer(wx.VERTICAL)
     left_vbox.Add(test_signals, proportion=0, flag=wx.EXPAND)
     left_vbox.Add(output, proportion=0, flag=wx.EXPAND)
-
+    
     right_vbox = wx.BoxSizer(wx.VERTICAL)
     right_vbox.Add(bandpass, proportion=0, flag=wx.EXPAND)
     right_vbox.AddStretchSpacer(1)
@@ -92,7 +92,7 @@ class ControlPanel(wx.Panel):
                                   fractionWidth=2, allowNegative=False,
                                   min=0.01)
     button_apply_time = wx.Button(time_box, label="Apply time limits")
-    button_reset_time =wx.Button(time_box, label="Reset time limits")
+    button_reset_time = wx.Button(time_box, label="Reset time limits")
     
     button_apply_time.Bind(wx.EVT_BUTTON, self.onApplyTime)
     button_reset_time.Bind(wx.EVT_BUTTON, self.onResetTime)
@@ -226,7 +226,7 @@ class ControlPanel(wx.Panel):
     parent.signal._low_cutoff = None
     parent.signal._high_cutoff = None
     parent.plotSignal(parent.signal, parent.nfft)
-    
+  
   
   def onApplyTime(self, event):
     dlg = wx.ProgressDialog(parent=self, message="Processing...",
@@ -262,8 +262,6 @@ class ControlPanel(wx.Panel):
     if source == ID_FILE_SIGNAL:
       if self.dlg.ShowModal() == wx.ID_OK:
         file_path = self.dlg.GetPath()
-        self.GetTopLevelParent().SetStatusText(
-          "You chose following file: " + file_path)
         signal = "File"
       else:
         file_path = None

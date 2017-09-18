@@ -139,22 +139,31 @@ class MainPanel(wx.Panel):
   def changeSignal(self, signal, f=440.0, l=1.0, amp=1.0, fs=44100, path=None):
     if signal is None or path is None:
       return
+    signal_str = signal
     try:
       signals_module = importlib.import_module('.signals', 'pythogram')
       try:
         if signal in ["Sine", "Square", "Sawtooth", "Triangle"]:
           self.signal = getattr(signals_module, signal)(freq=f, l=l, amp=amp,
                                                         srate=fs)
+          signal_str = signal + ", F: " + str(f) + " Hz, FS: " + str(
+            fs) + " Hz, Len: " + str(l) + " s, Amp: " + str(amp)
         elif signal == "WNoise":
           self.signal = getattr(signals_module, signal)(l=l, amp=amp, srate=fs)
+          signal_str = "White Noise, FS: " + str(
+            fs) + " Hz, Len: " + str(l) + " s, Amp: " + str(amp)
         
         elif signal == "File" and path is not None:
           self.signal = getattr(signals_module, signal)(path)
+          signal_str = path + ", FS: " + str(
+            self.signal.sample_rate) + " Hz, Len: " + str(self.signal.length)
       except AttributeError:
         print("Class does not exist")
     except ImportError:
       print("Module does not exist")
     
+    self.GetTopLevelParent().SetStatusText(
+      "You have chosen the following signal: " + signal_str)
     self.plotSignal(self.signal, self.nfft)
     self.setInformation(self.signal)
   
