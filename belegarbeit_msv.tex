@@ -68,8 +68,11 @@ Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen z
 
 \subsection{Projektintension}\label{subsec:projektintension}
 
+Der Zweck des Projektes besteht darin, sich mit der digitalen Signalverarbeitung in informationstechnologischer Hinsicht auseinanderzusetzen und dessen Verständnis zu fördern. Vor allem die Stichwörter Fast-Fourier-Transformation und Filterung sowie Manipulation stellen hier wichtige Bestandteile dar. Zudem bietet es die Möglichkeit, herauszufinden, wie Diagramme und andere Darstellungen durch Programme realisiert werden können.
+
 \subsection{Funktionale Anforderungen}\label{subsec:funktionaleAnforderungen}
 
+Folgende funktionale Anforderungen können der Aufgabenstellung entnommen werden:
 \begin{itemize}
   \item ein Eingang (Testsignal, Audiodatei)
   \item veränderbarer Zeitbereich
@@ -80,8 +83,32 @@ Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen z
   \item Spektrogramm (Frequenzbereich über Zeit hinweg)
 \end{itemize}
 
+\subsubsection{Weitere Anforderungen}
+
+Zu den Anforderungen an das Projekt, die sich nicht direkt in Funktionalitäten äußern, gehören:
+\begin{itemize}
+  \item Simulation von:
+  \begin{itemize}
+    \item Darstellungen
+    \item Berechnungen
+    \item Filterfunktionen
+  \end{itemize}
+  \item Erzeugen von Testsignalen
+  \item Vergleich von zwischen den unterschiedlichen Darstellungeformen
+  \item Vergleich von Darstellungen untereinander mit unterschiedlichen Parametern und Algorithmen
+  \item Validierung der korrekten Funktionsweise
+\end{itemize}
+
 \subsubsection{Abgrenzung des Produkts}
+
+Da der Bereich der digitalen Signalverarbeitung sehr groß ist, besteht die Notwendig zu erläutern, welche Funktionen nicht vom Programm gefordert sind. Dazu zählen sowohl die akustische Ausgabe der Signale als auch die Speicherung von neuen erzeugten Signalen, obwohl diese Punkte auch sehr interessant für Analysen sein würden.\\
+Außerdem ist es im Hinblick des Aufwandes nicht angemessen, alle möglichen Eingabeparameter auch dem Nutzer zur Verfügung zu stellen, da sich meist die Ausgabe nur minimal ändert. Im Gegenzug wird versucht, für diese nicht festlegbaren Parameter möglichst die besten Werte zu wählen.\\
+Zuletzt soll es auch möglich sein, eine Bandbegrenzung einstellen sowie verschiedene Zeitbereiche betrachten zu können.
+
 \subsubsection{Funktionen des Produktes}
+
+Das Programm soll im ersten Schritt erst einmal Signale wie einen Sinus erzeugen können, deren Frequenz, Länge, Amplitude und Abtastrate man frei wählen kann. Daneben soll auch die Auswahl eines eigenen Audiosignals möglich sein.\\
+Anschließend ist es erforderlich, dass diese dann in den verschiedenen Darstellungsformen korrekt visualisiert werden.
 
 \subsection{Nicht-funktionale Anforderungen}\label{subsec:nicht-funktionaleAnforderungen}
 %\subsubsection{Look and Feel}
