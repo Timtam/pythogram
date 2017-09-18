@@ -32,9 +32,9 @@
 \newpage
 \listoffigures
 \newpage
-\section{Einführung}
+\section{Einführung}\label{sec:einführung}
 
-\subsection{Aufgabenstellung}
+\subsection{Aufgabenstellung}\label{subsec:aufgabenstellung}
 
 SA Spektrumanalysator (Oszilloskop): Applikation ermöglicht die Visualisierung und Analyse von Signalen im Frequenzbereich
 \begin{itemize}
@@ -52,20 +52,20 @@ SA Spektrumanalysator (Oszilloskop): Applikation ermöglicht die Visualisierung 
   \item Validierung korrekter Funktionsweise (stimmt angezeigte Frequenz?, kontinuierliche Darstellung, usw.)
 \end{itemize}
 
-\subsection{Ziel der Arbeit}
+\subsection{Ziel der Arbeit}\label{subsec:zielDerArbeit}
 
 Das Ziel der Arbeit ist es, die Funktionsweise der auditiven Signalverarbeitung nicht nur zu verstehen, sondern in ihren Grundzügen auch selber Anwenden zu können. Zu diesem Zweck sollen möglichst viele Funktionen des Programmes selbst implementiert werden. Hierbei wird sowohl der Aufbau eines Signals, aber auch das Zusammenführen dieser, das Analysieren und verändern (bspw. durch Resampling, Downmixing etc) vermittelt und angewendet. Das Ziel der Arbeit und des Programmes an sich ist es, ein Programm zur Verfügung zu stellen, welche die oben genannten Anforderungen umsetzt.
 
-\subsection{Anwendungsfälle}
+\subsection{Anwendungsfälle}\label{subsec:anwendungsfälle}
 
 Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen zu lassen. Man kann hierbei untersuchen, welche Frequenzen in einem Audiosignal der Wahl (oder in generierten Testsignalen) besonders häufig vorhanden sind / besonders laut sind und so einen Eindruck über das Signal bekommen, ohne es sich anhören zu müssen. Außerdem kann man gezielt Frequenzen herausfiltern und sich das Ergebnis ohne diese Frequenzen visualisieren lassen. Zudem kann man sich Testsignale visualisieren lassen, um Erfahrung darüber zu gewinnen, wie typische Signale aussehen.
 
 \newpage
-\section{Anforderungsanalyse}
+\section{Anforderungsanalyse}\label{sec:anforderungsanalyse}
 
-\subsection{Projektintension}
+\subsection{Projektintension}\label{subsec:projektintension}
 
-\subsection{Funktionale Anforderungen}
+\subsection{Funktionale Anforderungen}\label{subsec:funktionaleAnforderungen}
 
 \begin{itemize}
   \item ein Eingang (Testsignal, Audiodatei)
@@ -80,7 +80,7 @@ Dieses Programm ist hilfreich, um sich ein Audiosignal visualisiert darstellen z
 \subsubsection{Abgrenzung des Produkts}
 \subsubsection{Funktionen des Produktes}
 
-\subsection{Nicht-funktionale Anforderungen}
+\subsection{Nicht-funktionale Anforderungen}\label{subsec:nicht-funktionaleAnforderungen}
 %\subsubsection{Look and Feel}
 %\subsubsection{Usability}
 %\subsubsection{Barrierefreiheit}
@@ -92,9 +92,9 @@ Das Endprodukt soll in der Leistung um ein Vielfaches schneller als Echtzeit sei
 %\subsubsection{Übersicht aller Anforderungen}
 
 \newpage
-\section{Ähnliche Anwendungen}
+\section{Ähnliche Anwendungen}\label{sec:ähnlicheAnwendungen}
 
-\subsection{Sonic Visualiser}
+\subsection{Sonic Visualiser}\label{subsec:sonicVisualiser}
 "`Sonic Visualiser"' ist eine kostenlose Software, mit der viele verschiedene Darstellungen von Audiosignalen möglich sind.
 So können Audiodateien der Formate WAV, Ogg und MP3 geladen werden, deren Schwingungsverlauf im Zeitbereich dann betrachtet werden kann. Zudem kann aber auch das Spektrum, Spektrogramm und weitere Diagramme dargestellt werden, die durch verschiedene Parameter beeinflusst und verändert werden können. Diese wiederum können unterschiedlich angeordnet und auch überlagert werden, um so Zusammenhänge zwischen ihnen besser zu erkennen.\\
 Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wiederzugeben während sich ein Cursor entsprechend über die Diagramme bewegt.
@@ -171,7 +171,7 @@ Die nächsten beiden Abbildungen zeigen das Spektrogramm des Lieds "`Toms Diner"
     \end{minipage}
 \end{figure}
 \newpage
-\subsection{Spek}
+\subsection{Spek}\label{subsec:spek}
 
 Mit dem kleinen Tool "`Spek"' kann man lediglich Audiodateien einlesen, deren Spektrogramm dann dargestellt wird. Leider gibt es bis auf die Sprache keinerlei Einstellungen. Man kann auch weder zoomen noch die Skalierung ändern. Das mag wohl daran liegen, dass diese Software zwischen 2010 und 2013 entwickelt wurde und sich immer noch in der Version 0.8.2 befindet.\\
 Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was für einen ersten kurzen Eindruck des Signals vollkommen genügt.\vspace{2em}
@@ -192,9 +192,9 @@ Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was fü
     \end{minipage}
 \end{figure}
 \newpage
-\section{Konzeption}
+\section{Konzeption}\label{sec:konzeption}
 
-\subsection{Anwendung}
+\subsection{Anwendung}\label{subsec:anwendung}
 
 \subsubsection{Benutzeroberfläche}
 
@@ -222,20 +222,20 @@ Folgende Parameter sollen eingegeben werden können:
 
 \subsubsection{Darstellungsformen}
 
-\subsection{Testsignale}
+\subsection{Testsignale}\label{subsec:testsignale}
 
 Dem Nutzer soll es möglich sein, verschiedene Testsignale zu generieren und die entsprechenden Diagramme dazu betrachten zu können. Als Testsignale kommen Sinus-, Rechteck-, Sägezahn- und Dreieck-Signal in Betracht sowie ein weißes Rauschen. Zusätzlich soll die Möglichkeit bestehen, ein eigenes Audiosignal einlesen zu können, wobei es zunächst ausreicht, sich auf WAVE-Dateien zu beschränken.
 
-\subsection{Zusammenfassung}
+\subsection{Zusammenfassung}\label{subsec:zusammenfassung}
 
 \newpage
-\section{Umsetzung und Evaluation}
+\section{Umsetzung und Evaluation}\label{sec:umsetzungUndEvaluation}
 
-\subsection{Ziele}
+\subsection{Ziele}\label{subsec:ziele}
 
 Das Ziel des Projektes war es, diverse Techniken der Signalverarbeitung grundlegend kennenzulernen, oder bereits bestehendes Wissen zu vertiefen, und dieses Wissen mit konventionellen Werkzeugen in der Skriptsprache Python anzuwenden, wobei auch ein funktionales und ansprechendes Design eines Fensters umgesetzt werden musste. Zudem sollten natürlich möglichst viele der Grundanforderungen erfüllt werden. Als Werkzeuge zur Entwicklung sollten Python 2.7, die IDE PyCharm, aber auch die mathematischen Grundpakete SciPy und NumPy dienen. Zur Fensterdarstellung sollte wxPython verwendet werden, wobei MatPlotLib unterstützend für die Darstellung des Spektrums und Spektrogrammes eingesetzt werden soll. Zur Verwaltung des Quellcodes sollte das Versionsverwaltungssystem Git in Kombination mit der Online-Plattform GitHub eingesetzt werden.
 
-\subsection{Umgesetzte Anforderungen}
+\subsection{Umgesetzte Anforderungen}\label{subsec:umgesetzteAnforderungen}
 
 \subsubsection{Benutzeroberfläche}
 
@@ -264,9 +264,9 @@ Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur
 \noindent
 [Bilder?]
 
-\subsection{Zusammenfassung}
+\subsection{Zusammenfassung}\label{subsec:zusammenfassung2}
 
 \newpage
-\section{Zusammenfassung und Ausblick}
+\section{Zusammenfassung und Ausblick}\label{sec:zusammenfassungUndAusblick}
 
 \end{document}
