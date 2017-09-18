@@ -1,6 +1,6 @@
 %https://www.overleaf.com/9980828whgsqyqzhjkx#/36673404/
 
-\documentclass[a4paper]{article}
+\documentclass[a4paper]{scrartcl}
 
 %% Language and font encodings
 \usepackage[ngerman]{babel}
@@ -18,7 +18,11 @@
 \usepackage[colorlinks=true, allcolors=black]{hyperref}
 
 \title{Belegarbeit Multimediale Signalverarbeitung\\Spektrumanalysator}
+\subtitle{\vspace{4em}
+Hochschule Anhalt\\
+Modul Multimediale Signalverarbeitung\vspace{4em}}
 \author{Toni Barth, Max Haarbach}
+\date{\vspace{10em}\today}
 
 \begin{document}
 \begin{titlepage}
@@ -39,20 +43,25 @@
 
 \subsection{Aufgabenstellung}\label{subsec:aufgabenstellung}
 
-Spektrumanalysator (Oszilloskop): Applikation ermöglicht die Visualisierung und Analyse von Signalen im Frequenzbereich
 \begin{itemize}
-  \item Funktionaler Umfang
+  \item Spektrumanalysator (Oszilloskop): Applikation ermöglicht die Visualisierung und Analyse von Signalen im Frequenzbereich
   \begin{itemize}
-    \item ein Eingang, veränderbare Zeitbereich/ Frequenzbereich und Amplitude, Frequenzband des Signals über Bandbegrenzung einstellbar, Spektrum, Spektrogramm
+    \item Funktionaler Umfang:
+    \begin{itemize}
+      \item Ein Eingang
+      \item veränderbarer Zeit- / Frequenzbereich und Amplitude
+      \item Frequenzband des Signals über Bandbegrenzung einstellbar
+      \item Spektrum, Spektrogramm
+    \end{itemize}
+    \item Simulation der Darstellungsformen, Berechnungen und Filterfunktionen (Spektrogram ohne Hilfsmittel implementieren(außer FFT-Funktion))
+    \item Erzeugen verschiedener Testsignale (z.B. Rauschen, Sinus, Musikstück)
+    \item Darstellung und Vergleich (Zeit- und Frequenzbereich) sowie Veränderung von Parametern / Algorithmen / Umsetzungen, Einfluss der FFT-Auflösung (Spektralkomponenten):
+    \begin{itemize}
+      \item Signale im Zeit- und Frequenzbereich (Spektrogram und Spektrum)
+      \item FFT-Auflösung/ Signallänge/ Fensterung
+    \end{itemize}
+    \item Validierung korrekter Funktionsweise durch Vergleich mit anderen, gleichartigen Werkzeugen
   \end{itemize}
-  \item Simulation der Darstellungsformen, Berechnungen und Filterfunktionen (Spektrogram ohne Hilfsmittel implementieren)
-  \item Erzeugen verschiedener Testsignale (z.B. Rauschen, Sinus, Musikstück)
-  \item Darstellung und Vergleich (Zeit- und Frequenzbereich) sowie Veränderung Parameter/ Algorithmen/ Umsetzung, Einfluss der FFT-Auflösung (Spektralkomponenten)
-  \begin{itemize}
-    \item Signale im Zeit- und Frequenzbereich (Spektrogram und Spektrum)
-    \item FFT-Auflösung/ Signallänge/ Fensterung
-  \end{itemize}
-  \item Validierung korrekter Funktionsweise durch Vergleich mit anderen, gleichartigen Werkzeugen
 \end{itemize}
 
 \subsection{Ziel der Arbeit}\label{subsec:zielDerArbeit}
@@ -131,9 +140,9 @@ Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wied
 \vspace{2em}
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.35\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Sonic_Layers.png}
+        \includegraphics[width=0.5\textwidth]{Sonic_Layers.png}
         \caption{Verschiedene Ebenen in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -144,7 +153,7 @@ In dieser Abbildung sieht man, welche verschiedenen Layer man auswählen kann, d
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=0.7\textwidth]{Sonic_Sine_Sweep_Wave.png}
+        \includegraphics[width=0.8\textwidth]{Sonic_Sine_Sweep_Wave.png}
         \caption{Wellenform eines steigenden Sinus in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -155,7 +164,7 @@ Bei der Darstellung der Wellenform kann man angeben, in welcher Farbe die Wellen
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=0.8\textwidth]{Sonic_Sine_Sweep_Spectrum_on_5s.png}
+        \includegraphics[width=0.9\textwidth]{Sonic_Sine_Sweep_Spectrum_on_5s.png}
         \caption{Spektrum eines steigenden Sinus bei ca 5 s in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -210,7 +219,7 @@ Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was fü
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=0.8\textwidth]{Spek_Sine_Sweep.png}
+        \includegraphics[width=0.7\textwidth]{Spek_Sine_Sweep.png}
         \caption{Steigender Sinus in "`Spek"'}
     \end{minipage}\hfill
 \end{figure}
@@ -259,8 +268,6 @@ Die eingebenen Signale sollen laut Anforderung mindestens als Spektrum und als S
 \subsection{Testsignale}\label{subsec:testsignale}
 
 Dem Nutzer soll es möglich sein, verschiedene Testsignale zu generieren und die entsprechenden Diagramme dazu betrachten zu können. Als Testsignale kommen Sinus-, Rechteck-, Sägezahn- und Dreieck-Signal in Betracht sowie ein weißes Rauschen. Zusätzlich soll die Möglichkeit bestehen, ein eigenes Audiosignal einlesen zu können, wobei es zunächst ausreicht, sich auf WAVE-Dateien zu beschränken.
-
-\subsection{Zusammenfassung}\label{subsec:zusammenfassung}
 
 \newpage
 \section{Umsetzung und Evaluation}\label{sec:umsetzungUndEvaluation}
@@ -369,6 +376,7 @@ Die einzige Auffälligkeit bildet der harte Übergang zwischen den einzelnen ver
 
 \subsection{Bandpass-Filter}
 
+Als Filter wurde ein Butterworth-Filter mit der Blackman-Fensterung verwendet, der in unseren Augen die besten Darstellungen ergab.
 Die Funktionsweise der Bandbegrenzung wurde folgendermaßen überprüft: Es wurde ein Dreieck-Signal erzeugt, das bekanntlich Obertöne hat und damit aus mehreren Sinus-Frequenzen besteht. Stellt man die Begrenzungen nun ziemlich nah an die eingestellte Frequenz, bleibt nach der Filterung ein Signal zurück, dass ziemlich nah an einen Sinus heran reicht. Die folgenden Abbildungen bezeugen dies.\vspace{2em}
 \begin{figure}[H]
     \centering
@@ -395,15 +403,16 @@ Die Funktionsweise der Bandbegrenzung wurde folgendermaßen überprüft: Es wurd
     \end{minipage}
 \end{figure}
 \noindent
-Zudem ist auch im Spektrum sehr gut ersichtlich, wie der Filter bei den Frequenzen agiert und an den eingestellten Frequenzen die Amplituden versucht, abzuschwächen.
-
-\subsection{Zusammenfassung}\label{subsec:zusammenfassung2}
+Zudem ist auch im Spektrum sehr gut ersichtlich, wie der Filter bei den Frequenzen agiert und an den eingestellten Frequenzen versucht, die Amplituden abzuschwächen.
 
 \newpage
 \section{Zusammenfassung und Ausblick}\label{sec:zusammenfassungUndAusblick}
 
-Die uns gestellten Ziele der Anwendung und der Aufgabenstellung wurden grundlegend erreicht, manche Sachen konnten wir sogar besser umsetzen, als wir es anfangs gedacht hätten. Das Thema der Signalverarbeitung wurde uns auf diesem Wege näher gebracht und wird in zukünftigen Projekten sicherlich noch häufiger von Nutzen sein. Filter beispielsweise können durchaus häufiger in Spielen angewendet werden (beispielsweise bei Geräuschen hinter einer Tür). Zudem haben wir intensiver mit NumPy und SciPy gearbeitet, welches beide nützliche Hilfsmittel im wissenschaftlichen Bereich sind und mit denen wir ein Andernmal sicher noch in Kontakt geraten werden.
-
-Alles in Allem sind wir mit unserem Ergebnis sehr zufrieden, wobei wir an manchen Stellen leider nicht mehr nachbessern konnten, obwohl uns dort eventuell noch Kleinigkeiten stören. Das Produkt erfüllt dennoch die Anforderungen, sowohl die in der Anforderungsanalyse gestellten, als auch unsere persönlichen.
+Die uns gestellten Ziele der Anwendung und der Aufgabenstellung wurden grundlegend erreicht, manche Sachen konnten wir sogar besser umsetzen, als wir es anfangs gedacht hätten. Das Thema der Signalverarbeitung wurde uns auf diesem Wege näher gebracht und wird in zukünftigen Projekten sicherlich noch häufiger von Nutzen sein. Filter beispielsweise können durchaus häufiger in Spielen angewendet werden (beispielsweise bei Geräuschen hinter einer Tür).\\
+Zudem haben wir intensiver mit NumPy und SciPy gearbeitet, welches beide nützliche Hilfsmittel im wissenschaftlichen Bereich sind und mit denen wir ein Andermal sicher noch in Kontakt geraten werden.\vspace{1em}\\
+Im Hinblick auf Erweiterung gibt es einiges an Potenzial. Sehr hilfreich wäre es z.B. die Diagramme im Vollbild darstellen zu können und diese dadurch in höheren Auflösungen exportieren zu können.\\
+Des Weiteren könnte das Spektrogramm durch eine bereits erwähnte Überlappung und Fensterung sowie durch die Einstellbarkeit der Art des Bandpass-Filters erweitert werden. Im Zuge dessen steht wiederum die Überlegung bevor, wie die Qualität der Diagramme weiter verbessert werden kann.\\
+Nicht zuletzt wären sowohl die größere Manipulation, Wiedergabe und das Speichern von den Signalen als auch der Vergleich mehrerer Signale in dem selben Diagrammen weitere interessante Aspekte im Bereich der digitalen Signalverarbeitung.\vspace{1em}\\
+Alles in Allem sind wir dennoch mit unserem Ergebnis sehr zufrieden, wobei wir an manchen Stellen leider nicht mehr nachbessern konnten, obwohl uns dort eventuell noch Kleinigkeiten stören. Das Produkt erfüllt dennoch die Anforderungen, sowohl die in der Anforderungsanalyse gestellten, als auch unsere persönlichen.
 
 \end{document}
