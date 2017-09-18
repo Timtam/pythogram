@@ -104,7 +104,7 @@ Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wied
 \vspace{2em}
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.42\textwidth}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Layers.png}
         \caption{Verschiedene Ebenen in "`Sonic Visualiser"'}
@@ -112,11 +112,12 @@ Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wied
 \end{figure}
 \noindent
 In dieser Abbildung sieht man, welche verschiedenen Layer man auswählen kann, die im den Diagrammbereich dargestellt werden sollen.
+\vspace{2em}
 \begin{figure}[H]
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Wave.png}
+        \includegraphics[width=0.7\textwidth]{Sonic_Sine_Sweep_Wave.png}
         \caption{Wellenform eines steigenden Sinus in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -127,8 +128,8 @@ Bei der Darstellung der Wellenform kann man angeben, in welcher Farbe die Wellen
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Spectrum_on_5s.png}
-        \caption{Spektrum eines steigenden Sinus bei ca 5$s$ in "`Sonic Visualiser"'}
+        \includegraphics[width=0.8\textwidth]{Sonic_Sine_Sweep_Spectrum_on_5s.png}
+        \caption{Spektrum eines steigenden Sinus bei ca 5 s in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
 \noindent
@@ -138,7 +139,7 @@ Beim Spektrum kann man wiederum die Farbe einstellen und in welcher Skalierung d
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Spectrogram.png}
+        \includegraphics[width=0.8\textwidth]{Sonic_Sine_Sweep_Spectrogram.png}
         \caption{Spektrogramm eines steigenden Sinus in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -149,7 +150,7 @@ Auch beim Spektrogramm kann die Farbe gewählt und ähnliche Parameter wie bei S
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_overlay.png}
+        \includegraphics[width=0.8\textwidth]{Sonic_Sine_Sweep_overlay.png}
         \caption{Überlagerung mehrerer Diagramme eines steigenden Sinus in "`Sonic Visualiser"'}
     \end{minipage}
 \end{figure}
@@ -182,7 +183,7 @@ Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was fü
     \centering
     \begin{minipage}{1.0\textwidth}
         \centering
-        \includegraphics[width=1.0\textwidth]{Spek_Sine_Sweep.png}
+        \includegraphics[width=0.8\textwidth]{Spek_Sine_Sweep.png}
         \caption{Steigender Sinus in "`Spek"'}
     \end{minipage}\hfill
 \end{figure}
@@ -280,11 +281,94 @@ Im unteren linken Diagramm ist dann das Spektrogramm des gesamten Signals darste
 In allen Diagrammen stehen zudem verschiedene Funktionen zu Verfügung.\\
 Man kann die Standardansicht wiederherstellen (Haus), zwischen den Ansichten vor oder zurück wechseln (Pfeile), die Kurven oder Bilder in den Diagrammen verschieben (4-Pfeil-Kreuz), in sie hinein (Lupe + linke Maustaste) oder aus ihnen heraus zoomen (Lupe + rechte Maustaste), einige minimale Einstellungen am Layout vornehmen und den aktuellen Diagramm-Ausschnitt als Bild speichern.
 
-\subsubsection{Testsignale}
+\subsubsection{Testsignale und Evaluation}
 
-Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.\vspace{2em}
+Als Testsignale stehen sowohl Sinus, Rechteck, Sägezahn und Dreieck-Signale zur Verfügung, deren Frequenz, Länge und Sampling-Rate nach Belieben angepasst werden können. Außerdem kann ein weißes Rauschen erzeugt werden. Zudem kann jede Art von Wave-Dateien eingebunden werden, um auch eigene Signale in Pythogram betrachten und analysieren zu können. Das Signal wird dabei in jedem Fall in einen einzigen Audiokanal zusammengeführt, da mehrere Kanäle in Pythogram nicht separat analysiert werden können.\vspace{1em}\\
+In den nächsten Abbildungen sind die verschiedenen Testsignal und die Diagramme zum Lied "`Toms Diner"' zu sehen.
+\vspace{2em}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Sine_1kHz.png}
+        \caption{Sinus mit 1 kHz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Square_500Hz.png}
+        \caption{Rechteck-Signal mit 500 Hz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Triangle_200Hz.png}
+        \caption{Dreieck-Signal mit 200 Hz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{WNoise.png}
+        \caption{Weißes Rauschen in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Sine_Sweep.png}
+        \caption{Steigender Sinus in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Toms_Diner.png}
+        \caption{Song "`Toms Diner"' in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+
 \noindent
-[Bilder?]
+In der Abbildung des Spektrums eines einfachen Sinus-Signals kann man erkennen, dass die Darstellung des Spektrums richtig aussieht sowie auch die Darstellung im Spektrogramm. Bei den Rechteck- und Dreieck-Signalen ist in den Spektren die Tatsache, dass diese Signale aus mehreren Sinus-Signalen bestehen, gut zu erkennen und bekräftigt damit auch die korrekte Funktionsweise. Auch beim Rauschen sind alle Frequenzen im Durchschnitt gleich stark vertreten.\\
+Vergleicht man nun die Spektrogramme des steigenden Sinus und des Lieds "`Toms Diner"', lassen viele Ähnlichkeiten feststellen und überzeugen daher auch von Korrektheit.\vspace{1em}\\
+Die einzige Auffälligkeit bildet der harte Übergang zwischen den einzelnen vertikalen Spektren-Linien. Dies hätte durch eine Überlappung der Spektren zu einem einstellbaren Parameter wie im Programm "`Sonic Visualizer"' (Prozentzahl hinter "Window") reduziert werden können, wurde aber im Anbetracht des Aufwands und der zur Verfügung stehenden Zeit ausgelassen und war auch keine konkrete Forderung.
+
+\subsection{Bandpass-Filter}
+
+Die Funktionsweise der Bandbegrenzung wurde folgendermaßen überprüft: Es wurde ein Dreieck-Signal erzeugt, das bekanntlich Obertöne hat und damit aus mehreren Sinus-Frequenzen besteht. Stellt man die Begrenzungen nun ziemlich nah an die eingestellte Frequenz, bleibt nach der Filterung ein Signal zurück, dass ziemlich nah an einen Sinus heran reicht. Die folgenden Abbildungen bezeugen dies.\vspace{2em}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Bandpass_Triangle.png}
+        \caption{Dreieck-Signal mit 1 kHz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Bandpass_Triangle_to_Sine.png}
+        \caption{Gefiltertes Dreieck-Signal (1 kHz) bei 900 Hz und 1200 Hz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{1.0\textwidth}
+        \centering
+        \includegraphics[width=1.0\textwidth]{Bandpass_Sine.png}
+        \caption{Sinus mit 1 kHz in "`Pythogram"'}
+    \end{minipage}
+\end{figure}
+\noindent
+Zudem ist auch im Spektrum sehr gut ersichtlich, wie der Filter bei den Frequenzen agiert und an den eingestellten Frequenzen die Amplituden versucht, abzuschwächen.
 
 \subsection{Zusammenfassung}\label{subsec:zusammenfassung2}
 
