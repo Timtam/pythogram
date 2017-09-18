@@ -120,7 +120,7 @@ class MatplotPanel(wx.Panel):
     # create a colorbar or change mappable
     if self.colorbar is None:
       self.colorbar = self.figure.colorbar(im)
-      self.colorbar.set_label('Intensity [dB]')
+      self.colorbar.set_label('Intensity [dB FS]')
     else:
       self.colorbar.on_mappable_changed(im)
     self.figure.canvas.draw()
