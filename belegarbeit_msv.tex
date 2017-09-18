@@ -13,6 +13,7 @@
 %% Useful packages
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{float}
 %\usepackage[colorinlistoftodos]{todonotes}
 \usepackage[colorlinks=true, allcolors=black]{hyperref}
 
@@ -96,79 +97,92 @@ Das Endprodukt soll in der Leistung um ein Vielfaches schneller als Echtzeit sei
 \subsection{Sonic Visualiser}
 "`Sonic Visualiser"' ist eine kostenlose Software, mit der viele verschiedene Darstellungen von Audiosignalen möglich sind.
 So können Audiodateien der Formate WAV, Ogg und MP3 geladen werden, deren Schwingungsverlauf im Zeitbereich dann betrachtet werden kann. Zudem kann aber auch das Spektrum, Spektrogramm und weitere Diagramme dargestellt werden, die durch verschiedene Parameter beeinflusst und verändert werden können. Diese wiederum können unterschiedlich angeordnet und auch überlagert werden, um so Zusammenhänge zwischen ihnen besser zu erkennen.\\
-Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wiederzugeben während sich ein Cursor entsprechend über die Diagramme bewegt.\\
-\begin{figure}[!htbp]
+Zur Abrundung des Ganzen besteht außerdem die Möglichkeit, die Audiodatei wiederzugeben während sich ein Cursor entsprechend über die Diagramme bewegt.
+\vspace{2em}
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.42\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Layers.png}
         \caption{Verschiedene Ebenen in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\noindent
+In dieser Abbildung sieht man, welche verschiedenen Layer man auswählen kann, die im den Diagrammbereich dargestellt werden sollen.
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Wave.png}
         \caption{Wellenform eines steigenden Sinus in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\noindent
+Bei der Darstellung der Wellenform kann man angeben, in welcher Farbe die Wellen und welcher Skalierung die Amplitude dargestellt werden soll.
+\vspace{2em}
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Spectrum_on_5s.png}
         \caption{Spektrum eines steigenden Sinus bei ca 5$s$ in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\noindent
+Beim Spektrum kann man wiederum die Farbe einstellen und in welcher Skalierung die Frequenz und Amplitude dargestellt werden soll. Außerdem ist die FFT-Auflösung bzw. Fensterung ein wichtiger Parameter. Je nach dem, an welcher Stelle des Signals man den Cursor positioniert hat, wird das Spektrum des Signals zu diesem Zeitpunkt dargestellt, was vor allem bei Wiedergabe des Signals interessant ist, da der Cursor der Wiedergabe folgt und somit immer das aktuelle Spektrum dargestellt wird.
+\vspace{2em}
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_Spectrogram.png}
         \caption{Spektrogramm eines steigenden Sinus in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\noindent
+Auch bei Spektrogramm kann die Farbe gewählt und ähnliche Parameter wie bei Spektrum eingestellt werden, da ein Spektrogramm im Endeffekt eine Zusammensetzung von mehreren kleinen Spektren ist. Daher kann hier auch die Skalierung der Amplitude und der Frequenzachse sowie die FFT-Auflösung verändert werden.
+\vspace{2em}
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Sine_Sweep_overlay.png}
         \caption{Überlagerung mehrerer Diagramme eines steigenden Sinus in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\noindent
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Toms_Diner_Spectrogram_all.png}
         \caption{Gesamtes Spektrogramm des Songs "`Toms Diner"' in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-\begin{figure}[!htbp]
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Sonic_Toms_Diner_Spectrogram_close.png}
         \caption{Spektrogramm am Anfang des Songs "`Toms Diner"' in "`Sonic Visualiser"'}
-    \end{minipage}\hfill
+    \end{minipage}
 \end{figure}
-
+\newpage
 \subsection{Spek}
 
 Mit dem kleinen Tool "`Spek"' kann man lediglich Audiodateien einlesen, deren Spektrogramm dann dargestellt wird. Leider gibt es bis auf die Sprache keinerlei Einstellungen. Man kann auch weder zoomen noch die Skalierung ändern. Das mag wohl daran liegen, dass diese Software zwischen 2010 und 2013 entwickelt wurde und sich immer noch in der Version 0.8.2 befindet.\\
 Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was für einen ersten kurzen Eindruck des Signals vollkommen genügt.\vspace{2em}
-\begin{figure}[!htbp]
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Spek_Sine_Sweep.png}
         \caption{Steigender Sinus in "`Spek"'}
     \end{minipage}\hfill
 \end{figure}
-\begin{figure}[!htbp]
+\begin{figure}[H]
     \centering
-    \begin{minipage}{0.8\textwidth}
+    \begin{minipage}{1.0\textwidth}
         \centering
         \includegraphics[width=1.0\textwidth]{Spek_Toms_Diner.png}
         \caption{Song "`Toms Diner"' - Susanne Vega in "`Spek"'}
