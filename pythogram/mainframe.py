@@ -109,7 +109,7 @@ class MainPanel(wx.Panel):
                                        # ylim=(0, 1e6),
                                        title='Spectrum',
                                        xlabel='Frequency in hertz (Hz)',
-                                       ylabel='Amplitude in decibel '
+                                       ylabel='Intensity in decibel '
                                               'relative\n to full scale (db '
                                               'FS)')
     # spectrogram
