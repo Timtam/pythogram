@@ -82,7 +82,7 @@ class MatplotPanel(wx.Panel):
   def plot(self, signal):
     self.axes.clear()
     self.setProperties()
-    t = np.arange(0.0, signal.length, (1.0 / signal.sample_rate))
+    t = np.linspace(0.0, signal.length, len(signal.signal))
     self.axes.plot(t, signal.signal, '-')
     self.axes.grid(self.grid, ls='-')
     self.figure.canvas.draw()
