@@ -34,8 +34,7 @@ setup(
                                  'collections.abc',
                                  'email',
                                  'numpy',
-                                 'scipy',
-                                 'unittest'
+                                 'scipy'
                                 ],
                     'include_files': [
                                       os.path.dirname(numpy.__file__),
