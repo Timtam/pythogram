@@ -245,6 +245,18 @@ Das Ziel des Projektes war es, diverse Techniken der Signalverarbeitung grundleg
 
 Als Werkzeuge zur Entwicklung sollten Python 2.7, die IDE PyCharm, aber auch die mathematischen Grundpakete SciPy und NumPy dienen. Zur Fensterdarstellung sollte wxPython verwendet werden, wobei MatPlotLib unterstützend für die Darstellung des Spektrums und Spektrogrammes eingesetzt werden soll. Zur Verwaltung des Quellcodes sollte das Versionsverwaltungssystem Git in Kombination mit der Online-Plattform GitHub eingesetzt werden.
 
+\subsubsection{Versionsverwaltung}
+
+Für die Versionsverwaltung wurde ein Repository unter https://github.com/Timtam/pythogram angelegt, in welchem die Entwicklung des Programmes durchgeführt wurde, um sich gegenseitig nicht zu behindern. Hierfür wurde das Programm Git verwendet, welche die Möglichkeit zur Verfügung stellt, Dateien unabhängig voneinander zu bearbeiten, ohne sich dabei gegenseitig zu behindern, aber auch, jegliche Änderung mit einer hilfreichen Meldung zu versehen, damit man im Nachhinein nachvollziehen kann, wer warum welche Änderung eingeführt hat.
+
+\subsubsection{Signalverarbeitung}
+
+Die interne Signalverarbeitung wurde mittels NumPy und SciPy realisiert. NumPy dient hierbei für die grundlegende Mathematik, wie beispielsweise das Verwalten der Signale, das durchführen grundlegender Rechenoperationen mit diesen, aber auch das Erzeugen von Sinus-Testsignalen. SciPy stellt die Funktionen zur Erzeugung einer FFT zur Verfügung, aber auch vorgefertigte Funktionen, um weitere Testsignale wie Sägezahn, Dreieck und Rechteck zu generieren.
+
+\subsubsection{Darstellung}
+
+Für die Darstellung wurde wxPython verwendet, um die Oberfläche darzustellen. Das Panel, welches das Spektrogramm anzeigt, wird mittels MatPlotLib unterstützend erzeugt, welches automatisch Zoom-Funktionalitäten, Skalen und Speicherautomatismen anbietet.
+
 \subsection{Umgesetzte Anforderungen}\label{subsec:umgesetzteAnforderungen}
 
 \subsubsection{Benutzeroberfläche}
