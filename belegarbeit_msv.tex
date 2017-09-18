@@ -201,7 +201,8 @@ Dennoch kann man damit sehr schnell sämtliche Audiosignale analysieren, was fü
 
 \subsubsection{Benutzeroberfläche}
 
-Ein konkretes Konzept für eine Benutzeroberfläche liegt nicht vor, da es zum Teil Bestandteil der Aufgabe und eine kleine Herausforderung für sich ist, Diagramme ordentlich darstellen zu können. Im Allgemeinen ist aber zu sagen, dass die Oberfläche übersichtlich und nicht zu überladen erscheinen soll. Die Funktionen in den Anforderungen lassen sich möglicherweise gut auf einen einzelnen Screen platzieren. Sofern noch weiterreichende Funktionen implementiert werden, gilt es zu überlegen, wie diese eingebettet werden.
+Ein konkretes Konzept für eine Benutzeroberfläche liegt nicht vor, da es zum Teil Bestandteil der Aufgabe und eine kleine Herausforderung für sich ist, Diagramme ordentlich darstellen zu können. Im Allgemeinen ist aber zu sagen, dass die Oberfläche übersichtlich und nicht zu überladen erscheinen soll.\\
+Die Funktionen in den Anforderungen lassen sich möglicherweise gut auf einen einzelnen Screen platzieren. Sofern noch weiterreichende Funktionen implementiert werden, gilt es zu überlegen, wie diese eingebettet werden.
 
 \subsubsection{Eingabeparameter}
 
@@ -225,6 +226,8 @@ Folgende Parameter sollen eingegeben werden können:
 
 \subsubsection{Darstellungsformen}
 
+Die eingebenen Signale sollen laut Anforderung mindestens als Spektrum und als Spektrogramm dargestellt werden. Zudem möchten wir das Signal als Wellenform im Zeitbereich darstellen. Falls möglich soll die Ansicht auf die Diagramme verändert und die Diagramm(-ausschnitte) selbst auch als Bilder exportiert werden können.
+
 \subsection{Testsignale}\label{subsec:testsignale}
 
 Dem Nutzer soll es möglich sein, verschiedene Testsignale zu generieren und die entsprechenden Diagramme dazu betrachten zu können. Als Testsignale kommen Sinus-, Rechteck-, Sägezahn- und Dreieck-Signal in Betracht sowie ein weißes Rauschen. Zusätzlich soll die Möglichkeit bestehen, ein eigenes Audiosignal einlesen zu können, wobei es zunächst ausreicht, sich auf WAVE-Dateien zu beschränken.
@@ -236,7 +239,11 @@ Dem Nutzer soll es möglich sein, verschiedene Testsignale zu generieren und die
 
 \subsection{Ziele}\label{subsec:ziele}
 
-Das Ziel des Projektes war es, diverse Techniken der Signalverarbeitung grundlegend kennenzulernen, oder bereits bestehendes Wissen zu vertiefen, und dieses Wissen mit konventionellen Werkzeugen in der Skriptsprache Python anzuwenden, wobei auch ein funktionales und ansprechendes Design eines Fensters umgesetzt werden musste. Zudem sollten natürlich möglichst viele der Grundanforderungen erfüllt werden. Als Werkzeuge zur Entwicklung sollten Python 2.7, die IDE PyCharm, aber auch die mathematischen Grundpakete SciPy und NumPy dienen. Zur Fensterdarstellung sollte wxPython verwendet werden, wobei MatPlotLib unterstützend für die Darstellung des Spektrums und Spektrogrammes eingesetzt werden soll. Zur Verwaltung des Quellcodes sollte das Versionsverwaltungssystem Git in Kombination mit der Online-Plattform GitHub eingesetzt werden.
+Das Ziel des Projektes war es, diverse Techniken der Signalverarbeitung grundlegend kennenzulernen, oder bereits bestehendes Wissen zu vertiefen, und dieses Wissen mit konventionellen Werkzeugen in der Skriptsprache Python anzuwenden, wobei auch ein funktionales und grobes ansprechendes Design eines Fensters umgesetzt werden musste. Zudem sollten natürlich möglichst viele der Grundanforderungen erfüllt werden.
+
+\subsection{Werkzeuge}\label{subsec:werkzeuge}
+
+Als Werkzeuge zur Entwicklung sollten Python 2.7, die IDE PyCharm, aber auch die mathematischen Grundpakete SciPy und NumPy dienen. Zur Fensterdarstellung sollte wxPython verwendet werden, wobei MatPlotLib unterstützend für die Darstellung des Spektrums und Spektrogrammes eingesetzt werden soll. Zur Verwaltung des Quellcodes sollte das Versionsverwaltungssystem Git in Kombination mit der Online-Plattform GitHub eingesetzt werden.
 
 \subsection{Umgesetzte Anforderungen}\label{subsec:umgesetzteAnforderungen}
 
